@@ -1,0 +1,22 @@
+<div id="sign_up">
+  <h2><%= title "#{render_or_call_method_or_proc_on(self, active_admin_application.site_title)} Sign up" %></h2>
+
+  <%= active_admin_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :id => "registration_new" }) do |f|
+    devise_error_messages!
+
+    f.inputs do
+      f.input :email, :label => :email, :autofocus => true
+      f.input :password, :label => :password
+      f.input :password_confirmation, :label => :password_confirmation
+    end
+
+    f.actions do
+      f.action :submit, :label => "Sign up", :button_html => { :value => "Sign up" }
+    end
+  end %>
+
+  <%= render "devise/shared/links" %>
+</div>
+
+
+
