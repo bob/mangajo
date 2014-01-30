@@ -1,5 +1,0 @@
-<%= semantic_form_for [:admin, @eaten] do |f| %>
-  <%= "#{@eaten.eatable.class.model_name.human} '#{@eaten.eatable.name}'" %>
-  <%= f.inputs :weight %>
-  <%= f.actions %>
-<% end %>
