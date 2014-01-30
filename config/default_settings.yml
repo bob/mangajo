@@ -1,0 +1,41 @@
+height:
+  var: height
+  title: Height
+  description: You height in sm
+  value: 180
+
+weight:
+  var: weight
+  title: Weight
+  description: Your weight in kg
+  value: 80
+
+proteins:
+  var: proteins
+  title: Proteins
+  description: Proteins per day in grams (2g per kg)
+  value: 160.0
+
+fats:
+  var: fats
+  title: Fats
+  description: Fats per day in grams (0.5g per kg)
+  value: 40.0
+
+carbs:
+  var: carbs
+  title: Carbohydrates
+  description: Carbs per day in grams (4g per kg)
+  value: 320.0
+
+meals:
+  var: meals
+  title: Meals
+  description: Number of meals per day
+  value: 4
+
+breakfast_time:
+  var: breakfast_time
+  title: "Breakfast time"
+  description: Time your first meal start
+  value: "8:00"

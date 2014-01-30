@@ -1,0 +1,22 @@
+panel "#{m.name} (#{Meal.meal_time(m, current_user).strftime('%H:%M')}) #{Meal.meal_percents(m, current_user)}% #{link_to("Add", new_admin_plan_plan_item_path(s, :meal_id => m), :style => "float: right;")}".html_safe do
+
+  s.plan_items.where(:meal_id => m.id).each_with_index do |i, index|
+    render :partial => "show_item", :locals => {:i => i, :index => index, :s => s}
+  end
+
+  render :partial => "total_target", :locals => {
+    :totals => {
+      :weight => s.meal_total_weight(m).round(2),
+      :proteins => s.meal_total_nutrition(:proteins, m).round(2),
+      :fats => s.meal_total_nutrition(:fats, m).round(2),
+      :carbs => s.meal_total_nutrition(:carbs, m).round(2)
+    },
+    :targets => {
+      :proteins => Meal.meal_target(:proteins, m, current_user),
+      :fats => Meal.meal_target(:fats, m, current_user),
+      :carbs => Meal.meal_target(:carbs, m, current_user)
+    }
+  }
+
+end
+
