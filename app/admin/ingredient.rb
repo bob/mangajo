@@ -1,6 +1,11 @@
 ActiveAdmin.register Ingredient do
   config.batch_actions = false
 
+  filter :name
+  filter :proteins
+  filter :fats
+  filter :carbs
+
   index do
     #selectable_column
     #column :id

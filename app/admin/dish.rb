@@ -1,19 +1,35 @@
 ActiveAdmin.register Dish do
+  config.batch_actions = false
+
+  filter :name
+  filter :proteins
+  filter :fats
+  filter :carbs
 
   index do
-    selectable_column
+    #selectable_column
 
-    column :id
-    column :name
+    #column :id
+    column :name do |c|
+      auto_link c, c.name
+    end
     column :weight
     column :proteins
     column :fats
     column :carbs
-    column :updated_at
+    #column :updated_at
 
-    actions :default => true do |d|
-      link_to "Eat", new_admin_dish_eaten_path(d)
+    #actions :default => true do |d|
+      #link_to "Eat", new_admin_dish_eaten_path(d)
+    #end
+    column "" do |resource|
+      links = ''.html_safe
+      links += link_to I18n.t('active_admin.edit'), edit_resource_path(resource), :class => "member_link edit_link"
+      links += link_to I18n.t('active_admin.delete'), resource_path(resource), :method => :delete, :data => {:confirm => I18n.t('active_admin.delete_confirmation')}, :class => "member_link delete_link"
+      links += link_to "Eat", new_admin_dish_eaten_path(resource)
+      links
     end
+
   end
 
   show do |d|

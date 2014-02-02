@@ -1,10 +1,17 @@
 ActiveAdmin.register Eaten do
+  config.batch_actions = false
   menu :priority => 2
   scope_to :current_user
   config.clear_action_items!
 
+  filter :eatable_type
+  filter :proteins
+  filter :fats
+  filter :carbs
+  filter :created_at
+
   index do
-    selectable_column
+    #selectable_column
 
     column :eatable
     column :weight

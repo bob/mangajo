@@ -1,6 +1,10 @@
 ActiveAdmin.register Plan do
+  config.batch_actions = false
   menu :priority => 1
   scope_to :current_user
+
+  filter :name
+  filter :created_at
 
   action_item :only => :show do
     link_to "Auto weights", auto_weights_admin_plan_path(plan), :method => :post#, :data => {:confirm => "Are you sure?"}

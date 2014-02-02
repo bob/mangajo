@@ -36,7 +36,7 @@ ActiveAdmin.register_page "Dashboard" do
       end
 
       column do
-        panel "Today Info" do
+        panel "Info" do
           para "Proteins: #{current_user.eatens.find_day(params[:d]).sum(:proteins).round(2)} (#{current_user.setting(:proteins)})"
           para "Fats: #{current_user.eatens.find_day(params[:d]).sum(:fats).round(2)} (#{current_user.setting(:fats)})"
           para "Carbs: #{current_user.eatens.find_day(params[:d]).sum(:carbs).round(2)} (#{current_user.setting(:carbs)})"
