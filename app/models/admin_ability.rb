@@ -7,6 +7,7 @@ class AdminAbility
 
     can :read, ActiveAdmin::Page, :name => "Dashboard"
     can :manage, Plan
+    can :manage, PlanItem
     can :manage, Dish
     can :manage, Eaten
     can :manage, Ingredient
