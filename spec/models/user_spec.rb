@@ -3,6 +3,12 @@ require 'spec_helper'
 describe User do
   context "Associations" do
     it { should have_many(:settings) }
+    it "should return current dishes" do
+      user = Factory.create(:user)
+      dish = double(:dish)
+      Dish.should_receive(:by_ration).with(1).and_return([dish])
+      user.current_dishes.should include(dish)
+    end
   end
 
   context "Settings" do

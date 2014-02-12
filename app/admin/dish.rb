@@ -1,6 +1,8 @@
 ActiveAdmin.register Dish do
   config.batch_actions = false
 
+  scope_to :current_user, :association_method => :current_dishes
+
   filter :name
   filter :proteins
   filter :fats
@@ -55,13 +57,15 @@ ActiveAdmin.register Dish do
   end
 
   form do |f|
+    f.semantic_errors *f.object.errors.keys
+
     f.inputs "Details" do
       f.input :name
     end
 
     f.has_many :dish_compositions, :allow_destroy => true, :heading => "Ingredients" do |i|
       i.inputs "Ingredients" do
-        i.input :ingredient_id, :as => :select, :collection => Ingredient.all
+        i.input :ingredient_id, :as => :select, :collection => Ingredient.by_ration(current_user.setting(:ration))
         i.input :weight
       end
     end

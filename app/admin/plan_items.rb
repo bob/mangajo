@@ -3,7 +3,7 @@ ActiveAdmin.register PlanItem do
 
   form do |f|
     f.inputs do
-      f.input :dish
+      f.input :dish, :as => :select, :collection => Dish.by_ration(current_user.setting(:ration))
       f.input :meal_id, :as => :hidden
 
     end

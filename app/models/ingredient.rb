@@ -5,6 +5,9 @@ class Ingredient < ActiveRecord::Base
   has_many :dishes, :through => :dish_compositions
   has_many :eatens, :as => :eatable
   has_many :plan_item_ingredients, :dependent => :destroy
+  belongs_to :ration
+
+  scope :by_ration, ->(ration_id) { where(:ration_id => ration_id)}
 
   PORTION_UNITS = {:gramm => "g", :item => "item", :teaspoon => "t.s."}
 

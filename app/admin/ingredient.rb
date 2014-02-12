@@ -1,5 +1,9 @@
 ActiveAdmin.register Ingredient do
   config.batch_actions = false
+  scope_to do
+    Ration.find(current_user.setting(:ration))
+  end
+
 
   filter :name
   filter :proteins

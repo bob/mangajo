@@ -1,6 +1,9 @@
 FactoryGirl.define do
   factory :dish do
     sequence(:name) { |n| "Dish_#{n}" }
+    dish_compositions { [
+      Factory.create(:dish_composition, :ingredient => Factory.create(:ingredient_empty))
+    ] }
 
     factory :dish_schema_a do
       dish_compositions { [
@@ -10,6 +13,9 @@ FactoryGirl.define do
     end
 
     factory :dish_sample do
+      dish_compositions { [
+        Factory.create(:dish_composition, :ingredient => Factory.create(:ingredient, :proteins => 19.25, :fats => 30.25, :carbs => 41.25), :weight => 200)
+      ] }
       name "Dish_sample"
       weight "200"
       proteins "38.5"

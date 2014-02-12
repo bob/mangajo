@@ -17,6 +17,7 @@ describe Plan do
     it "should calculate one dish, all ingredients with protein" do
 
       dish = Factory.create(:flakes)
+
       ing_1 = Factory.create(:nestle_fitness)
       ing_2 = Factory.create(:milk)
       dish_com_1 = Factory.create(:dish_composition, :weight => 80, :dish => dish, :ingredient => ing_1)
@@ -36,7 +37,11 @@ describe Plan do
 
     context "ingredients with zero protein" do
       before(:each) do
-        @dish = Factory.create(:omelet, :weight => 158)
+        @dish = Factory.create(:omelet)
+        # this is because there is one ingredient by default and weight changed after save
+        @dish.ingredients.delete_all
+        @dish.update_column(:weight, 158)
+
         @ing_1 = Factory.create(:glair)
         @ing_2 = Factory.create(:salt)
         @ing_3 = Factory.create(:cheese)
@@ -59,7 +64,8 @@ describe Plan do
       end
 
       it "select ingredients without protein" do
-        @plan_item_1.pi_ingredients_without_protein.should == [@piing_2, @piing_4]
+        @plan_item_1.pi_ingredients_without_protein.should include(@piing_2, @piing_4)
+        @plan_item_1.pi_ingredients_without_protein.should_not include(@piing_1, @piing_3)
       end
 
       it "all ingredients percentage" do

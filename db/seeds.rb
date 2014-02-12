@@ -8,3 +8,7 @@
 
 admin = User.create( {:email =>'admin@example.com', :password => 'changeme'})
 admin.add_role :admin
+
+default_ration = Ration.new(:name => "Common", :description => "Default ration")
+default_ration.user = admin
+default_ration.save

@@ -9,9 +9,14 @@ class User < ActiveRecord::Base
   has_many :settings, :as => :thing
   has_many :eatens, :dependent => :destroy
   has_many :plans, :dependent => :destroy
+  has_many :rations, :dependent => :destroy
 
   attr_accessible :email, :password, :password_confirmation, :remember_me
   attr_accessible :email, :password, :password_confirmation, :role_ids, :signing_attributes, :as => :admin
+
+  def current_dishes
+    Dish.by_ration(self.setting(:ration))
+  end
 
   def setting(var)
     var = var.to_s

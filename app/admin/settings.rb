@@ -16,7 +16,8 @@ ActiveAdmin.register_page "Settings" do
     setting.value = params[:value]
     if setting.save
       setting.recalculate!
-      redirect_to admin_settings_path, :notice => "Setting '#{setting.title}' updated"
+
+      redirect_to (params[:ref].blank? ? admin_settings_path : params[:ref]), :notice => "Setting '#{setting.title}' updated"
     else
       redirect_to admin_settings_path, :alert => "Setting '#{setting.title}' not updated. #{setting.errors.full_messages.join(', ')}"
     end

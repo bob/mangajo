@@ -1,5 +1,7 @@
 FactoryGirl.define do
   factory :ingredient do
+    ration { Ration.find_by_id(1) || Factory.create(:ration, :id => 1)}
+
     sequence(:name) { |n| "Ingredient_#{n}" }
     portion { 100 }
     portion_unit "gramm"
@@ -65,6 +67,13 @@ FactoryGirl.define do
       proteins "0"
       fats "0"
       carbs "99.9"
+    end
+
+    factory :ingredient_empty do
+      name "Empty"
+      proteins "0"
+      fats "0"
+      carbs "0"
     end
 
 

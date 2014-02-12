@@ -13,6 +13,10 @@ class Eaten < ActiveRecord::Base
     self.update_column(:carbs, eated.calculate_nutrient_weight(:carbs, self.weight))
   end
 
+  def display_name
+
+  end
+
   class << self
     def find_day(date=nil)
       db_date = date ? date.to_date : Date.today.to_date
