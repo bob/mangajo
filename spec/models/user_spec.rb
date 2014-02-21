@@ -3,6 +3,7 @@ require 'spec_helper'
 describe User do
   context "Associations" do
     it { should have_many(:settings) }
+    it { should have_and_belong_to_many(:shared_rations) }
     it "should return current dishes" do
       user = Factory.create(:user)
       dish = double(:dish)
@@ -39,6 +40,10 @@ describe User do
 
       defaults.should include(last_var)
       defaults.should include(first_var)
+    end
+
+    it "should set default ration after create" do
+      user.setting(:ration).should == 1
     end
 
   end

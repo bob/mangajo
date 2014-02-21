@@ -12,6 +12,7 @@ class AdminAbility
     can :manage, Eaten
     can :manage, Ingredient
     can :manage, ActiveAdmin::Page, :name => "Settings"
+    can :manage, Ration
 
     # A super_admin can do the following:
     if user.has_role? 'admin'

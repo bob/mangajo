@@ -9,10 +9,20 @@ class User < ActiveRecord::Base
   has_many :settings, :as => :thing
   has_many :eatens, :dependent => :destroy
   has_many :plans, :dependent => :destroy
-  has_many :rations, :dependent => :destroy
+  has_many :own_rations, :class_name => Ration, :dependent => :destroy
+  has_and_belongs_to_many :shared_rations, :class_name => Ration
 
   attr_accessible :email, :password, :password_confirmation, :remember_me
   attr_accessible :email, :password, :password_confirmation, :role_ids, :signing_attributes, :as => :admin
+
+  def all_rations
+    #(self.own_rations + self.shared_rations).sort! {|x,y| x.created_at <=> y.created_at} #=> accesible_by error
+    #self.own_rations.merge(self.shared_rations) # => empty result
+
+    #TODO should refactor to direct SQL query
+    temp = self.own_rations + self.shared_rations
+    Ration.where('id in (?)',temp.map(&:id)).order("created_at DESC")
+  end
 
   def current_dishes
     Dish.by_ration(self.setting(:ration))

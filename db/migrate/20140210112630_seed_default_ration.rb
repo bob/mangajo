@@ -6,7 +6,7 @@ class SeedDefaultRation < ActiveRecord::Migration
       admin = User.find(1)
 
       if admin
-        default_ration = Ration.new(:name => "Common", :description => "Default ration")
+        default_ration = Ration.new(:name => "Default", :description => "Default ration")
         default_ration.user = admin
         default_ration.save
       end
