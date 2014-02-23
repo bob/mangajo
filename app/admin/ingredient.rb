@@ -3,7 +3,18 @@ ActiveAdmin.register Ingredient do
   scope_to do
     Ration.find(current_user.setting(:ration))
   end
+  config.clear_action_items! #unless can? :create, Ingredient
 
+  action_item :only => [:index] do
+    ingredient = Ingredient.new
+    ingredient.ration = Ration.find(current_user.setting(:ration))
+
+    if authorized? :new, ingredient
+      link_to "New Ingredient", new_admin_ingredient_path
+    else
+      link_to "New Ingredient", nil, :data => {:confirm => "You can't create new Ingredient for current Ration. Please choose your own Ration first."}
+    end
+  end
 
   filter :name
   filter :proteins
@@ -26,8 +37,10 @@ ActiveAdmin.register Ingredient do
 
     column "" do |resource|
       links = ''.html_safe
-      links += link_to I18n.t('active_admin.edit'), edit_resource_path(resource), :class => "member_link edit_link"
-      links += link_to I18n.t('active_admin.delete'), resource_path(resource), :method => :delete, :data => {:confirm => I18n.t('active_admin.delete_confirmation')}, :class => "member_link delete_link"
+      if authorized? :edit, resource
+        links += link_to I18n.t('active_admin.edit'), edit_resource_path(resource), :class => "member_link edit_link"
+        links += link_to I18n.t('active_admin.delete'), resource_path(resource), :method => :delete, :data => {:confirm => I18n.t('active_admin.delete_confirmation')}, :class => "member_link delete_link"
+      end
       links += link_to "Eat", new_admin_ingredient_eaten_path(resource)
       links
     end
@@ -44,8 +57,6 @@ ActiveAdmin.register Ingredient do
     end
     f.actions
   end
-
-
 
   controller do
   end

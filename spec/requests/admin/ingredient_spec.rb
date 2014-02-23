@@ -8,6 +8,33 @@ describe "Ingredients" do
       login_as admin
     end
 
+    context "create new" do
+      it "should not create for someone ration" do
+        user_2 = Factory.create(:user)
+        ration = Factory.create(:ration, :user => user_2)
+        ration.customers << admin
+        ration_setting = Factory.create(:setting, :var => "ration", :value => ration.id)
+        admin.settings << ration_setting
+
+        visit admin_ingredients_path
+        page.should have_link('New Ingredient')
+
+        visit new_admin_ingredient_path
+        page.should have_selector('div.flash_alert', :text => "You are not authorized to perform this action.")
+      end
+
+      it "should create for own ration" do
+        ration = Factory.create(:ration, :user => admin)
+        ration_setting = Factory.create(:setting, :var => "ration", :value => ration.id)
+        admin.settings << ration_setting
+
+        visit admin_ingredients_path
+        click_link('New Ingredient')
+
+        page.should have_selector('h2', :text => "New Ingredient")
+      end
+    end
+
     it "should eat ingredient" do
       ingredient = Factory.create(:ingredient_sample)
 

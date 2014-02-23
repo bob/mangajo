@@ -4,13 +4,18 @@ class AdminAbility
 
   def initialize(user)
     user ||= User.new
+    alias_action :new, :create, :edit, :update, :destroy, :to => :change
+    alias_action :read, :create, :to => :read_create
 
     can :read, ActiveAdmin::Page, :name => "Dashboard"
     can :manage, Plan
     can :manage, PlanItem
     can :manage, Dish
     can :manage, Eaten
-    can :manage, Ingredient
+
+    can :read, Ingredient
+    can :change, Ingredient, :ration => {:user_id => user.id}
+
     can :manage, ActiveAdmin::Page, :name => "Settings"
     can :manage, Ration
 
