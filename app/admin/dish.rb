@@ -1,7 +1,7 @@
 ActiveAdmin.register Dish do
   config.batch_actions = false
 
-  scope_to :current_user, :association_method => :current_dishes
+  scope_to :current_user
 
   filter :name
   filter :proteins
@@ -26,8 +26,10 @@ ActiveAdmin.register Dish do
     #end
     column "" do |resource|
       links = ''.html_safe
-      links += link_to I18n.t('active_admin.edit'), edit_resource_path(resource), :class => "member_link edit_link"
-      links += link_to I18n.t('active_admin.delete'), resource_path(resource), :method => :delete, :data => {:confirm => I18n.t('active_admin.delete_confirmation')}, :class => "member_link delete_link"
+      if current_user.id == resource.user.id
+        links += link_to I18n.t('active_admin.edit'), edit_resource_path(resource), :class => "member_link edit_link"
+        links += link_to I18n.t('active_admin.delete'), resource_path(resource), :method => :delete, :data => {:confirm => I18n.t('active_admin.delete_confirmation')}, :class => "member_link delete_link"
+      end
       links += link_to "Eat", new_admin_dish_eaten_path(resource)
       links
     end
@@ -77,4 +79,13 @@ ActiveAdmin.register Dish do
     f.actions
 
   end
+
+  controller do
+    def index
+      index! do |format|
+        @dishes = current_user.all_dishes.page(params[:page])
+      end
+    end
+  end
+
 end

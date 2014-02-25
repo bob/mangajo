@@ -12,7 +12,7 @@ ActiveAdmin.register Ingredient do
     if authorized? :new, ingredient
       link_to "New Ingredient", new_admin_ingredient_path
     else
-      link_to "New Ingredient", nil, :data => {:confirm => "You can't create new Ingredient for current Ration. Please choose your own Ration first."}
+      link_to "New Ingredient", nil, :data => {:confirm => "You can't create Ingredient for current Ration. Please choose your own Ration first."}
     end
   end
 

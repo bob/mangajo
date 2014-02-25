@@ -10,12 +10,13 @@ describe Dish do
 
   describe "Scopes" do
     it "should get by ration" do
-      ration = Factory.create(:ration)
+      user = Factory.create(:user)
+      ration = Factory.create(:ration, :user => user)
       ration_2 = Factory.create(:ration)
       ingredient_a = Factory.create(:ingredient, :ration => ration)
       ingredient_b = Factory.create(:ingredient, :ration => ration)
       ingredient_2 = Factory.create(:ingredient, :ration => ration_2)
-      dish_1 = Factory.create(:dish)
+      dish_1 = Factory.create(:dish, :user => user)
 
       dish_2 = Factory.create(:dish)
       dish_2.ingredients.delete_all
@@ -25,7 +26,7 @@ describe Dish do
 
       dc_2 = Factory.create(:dish_composition, :ingredient => ingredient_2, :dish => dish_2)
 
-      res = Dish.by_ration(ration.id)
+      res = Dish.by_ration_and_own(ration.id)
       res.should == [dish_1]
     end
   end
@@ -44,17 +45,27 @@ describe Dish do
       dish.should_not be_valid
     end
 
-    it "should calculate params" do
-      dish = Factory.create(:dish_schema_a)
-      dish_sample = Factory.build(:dish_sample)
+    context "#calculate_params" do
+      it "should calculate params" do
+        dish = Factory.create(:dish_schema_a)
+        dish_sample = Factory.build(:dish_sample)
 
-      dish.name.should be_present
+        dish.name.should be_present
 
-      dish.calculate_params
-      dish.weight.should == dish_sample.weight
-      dish.proteins.should == dish_sample.proteins
-      dish.fats.should == dish_sample.fats
-      dish.carbs.should == dish_sample.carbs
+        dish.calculate_params
+        dish.weight.should == dish_sample.weight
+        dish.proteins.should == dish_sample.proteins
+        dish.fats.should == dish_sample.fats
+        dish.carbs.should == dish_sample.carbs
+      end
+
+      it "should calculate with zero weight ingredient" do
+        dish = Factory.create(:dish)
+        dish.dish_compositions.count.should == 1
+        dish.dish_compositions.first.weight = nil
+
+        dish.calculate_params
+      end
     end
 
   end

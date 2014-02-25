@@ -8,7 +8,26 @@ describe "Dishes" do
       login_as admin
     end
 
+    it "should contain own dishes and dishes from current ration" do
+      own_dish = Factory.create(:dish, :user => admin)
+
+      user_2 = Factory.create(:user)
+      ration = Factory.create(:ration, :user => user_2)
+      dish_2 = Factory.create(:dish, :user => user_2)
+      dish_2.ingredients.each{ |i| i.update_column(:ration_id, ration.id) }
+      own_dish.ingredients.each{ |i| i.update_column(:ration_id, ration.id) }
+      admin.shared_rations << ration
+      admin.settings << Factory.create(:setting, :var => "ration", :value => ration.id)
+
+      visit admin_dishes_path
+
+      page.should have_selector('h2', :text => "Dishes")
+      page.should have_selector('table tbody tr td.col-name', :text => own_dish.name)
+      page.should have_selector('table tbody tr td.col-name', :text => dish_2.name)
+    end
+
     it "should create dish from ingredients" do
+      ration = Factory.create(:ration, :id => 1)
 
       visit admin_dishes_path
 
@@ -50,7 +69,7 @@ describe "Dishes" do
     end
 
     it "should eat dish" do
-      dish = Factory.create(:dish_sample)
+      dish = Factory.create(:dish_sample, :user => admin)
 
       visit admin_dishes_path
 

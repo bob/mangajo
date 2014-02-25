@@ -19,6 +19,7 @@ class Ingredient < ActiveRecord::Base
   end
 
   def calculate_nutrient_weight(nutrient, weight)
+    weight ||= 0
     case self.portion_unit
     when "gramm"
       weight * self.send(nutrient) / self.portion

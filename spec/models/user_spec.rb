@@ -4,12 +4,13 @@ describe User do
   context "Associations" do
     it { should have_many(:settings) }
     it { should have_and_belong_to_many(:shared_rations) }
-    it "should return current dishes" do
+    it "should return dishes for current ration" do
       user = Factory.create(:user)
       dish = double(:dish)
-      Dish.should_receive(:by_ration).with(1).and_return([dish])
-      user.current_dishes.should include(dish)
+      Dish.should_receive(:by_ration_and_own).and_return([dish])
+      user.all_dishes.should include(dish)
     end
+    it { should have_many(:dishes) }
   end
 
   context "Settings" do

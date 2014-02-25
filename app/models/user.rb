@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
   has_many :plans, :dependent => :destroy
   has_many :own_rations, :class_name => Ration, :dependent => :destroy
   has_and_belongs_to_many :shared_rations, :class_name => Ration
+  has_many :dishes, :dependent => :destroy
 
   attr_accessible :email, :password, :password_confirmation, :remember_me
   attr_accessible :email, :password, :password_confirmation, :role_ids, :signing_attributes, :as => :admin
@@ -24,8 +25,8 @@ class User < ActiveRecord::Base
     Ration.where('id in (?)',temp.map(&:id)).order("created_at DESC")
   end
 
-  def current_dishes
-    Dish.by_ration(self.setting(:ration))
+  def all_dishes
+    Dish.by_ration_and_own(self.setting(:ration), self)
   end
 
   def setting(var)
