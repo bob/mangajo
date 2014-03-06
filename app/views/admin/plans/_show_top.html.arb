@@ -2,14 +2,18 @@ columns do
   column :min_width => "30%" do
     "&nbsp;".html_safe
   end
-  column :max_width => "10%" do
+  column :max_width => "8%" do
     strong "Weight"
   end
   [:proteins, :fats, :carbs].each do |n|
-    column :max_width => "10%" do
+    column :max_width => "8%" do
       strong n.capitalize
     end
   end
+  column :max_width => "8%" do
+    strong "kCal"
+  end
+
   column do
   end
 end
@@ -19,7 +23,8 @@ render :partial => "total_target", :locals => {
     :weight => s.total_weight.round(2),
     :proteins => s.total_nutrition(:proteins).round(2),
     :fats => s.total_nutrition(:fats).round(2),
-    :carbs => s.total_nutrition(:carbs).round(2)
+    :carbs => s.total_nutrition(:carbs).round(2),
+    :kcal => s.total_kcal.round(2)
   },
   :targets => {
     :proteins => current_user.setting(:proteins),

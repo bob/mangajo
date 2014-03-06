@@ -1,4 +1,6 @@
 class PlanItem < ActiveRecord::Base
+  include Calorie
+
   belongs_to :plan
   belongs_to :dish
   belongs_to :meal

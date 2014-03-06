@@ -9,7 +9,8 @@ panel "#{m.name} (#{Meal.meal_time(m, current_user).strftime('%H:%M')}) #{Meal.m
       :weight => s.meal_total_weight(m).round(2),
       :proteins => s.meal_total_nutrition(:proteins, m).round(2),
       :fats => s.meal_total_nutrition(:fats, m).round(2),
-      :carbs => s.meal_total_nutrition(:carbs, m).round(2)
+      :carbs => s.meal_total_nutrition(:carbs, m).round(2),
+      :kcal => s.meal_total_kcal(m).round(2)
     },
     :targets => {
       :proteins => Meal.meal_target(:proteins, m, current_user),

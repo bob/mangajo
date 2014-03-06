@@ -3,14 +3,18 @@ columns :class => "columns total" do
     strong "Total", :style => "float: right;"
   end
 
-  column :max_width => "10%" do
+  column :max_width => "8%" do
     strong totals[:weight]
   end
 
   [:proteins, :fats, :carbs].each do |n|
-    column :max_width => "10%" do
+    column :max_width => "8%" do
       status_tag totals[n].to_s, (totals[n] > targets[n].to_i) ? :error : :ok
     end
+  end
+
+  column :max_width => "8%" do
+    strong totals[:kcal]
   end
 
   column do
@@ -22,14 +26,18 @@ columns :class => "columns" do
     strong "Target", :style => "float: right;"
   end
 
-  column :max_width => "10%" do
+  column :max_width => "8%" do
     "&nbsp;".html_safe
   end
 
   [:proteins, :fats, :carbs].each do |n|
-    column :max_width => "10%" do
+    column :max_width => "8%" do
       targets[n]
     end
+  end
+
+  column :max_width => "8%" do
+    "&nbsp;".html_safe
   end
 
   column do

@@ -3,14 +3,18 @@ columns :class => "columns #{(index % 2 > 0) ? "even" : "odd"}" do
     span auto_link(i, i.dish.name)
   end
 
-  column :max_width => "10%" do
+  column :max_width => "8%" do
     span i.weight.round(2)
   end
 
   [:proteins, :fats, :carbs].each do |n|
-    column :max_width => "10%" do
+    column :max_width => "8%" do
       i.calculate_nutrient_weight(n, i.weight).round(2)
     end
+  end
+
+  column :max_width => "8%" do
+    i.calculate_kcal_weight(i.weight).round(2)
   end
 
   column do
@@ -26,14 +30,18 @@ i.plan_item_ingredients.each do |pi|
       span pi.ingredient.name
     end
 
-    column :max_width => "10%" do
+    column :max_width => "8%" do
       span pi.weight.round(2)
     end
 
     [:proteins, :fats, :carbs].each do |n|
-      column :max_width => "10%" do
+      column :max_width => "8%" do
         span pi.ingredient.calculate_nutrient_weight(n, pi.weight).round(2)
       end
+    end
+
+    column :max_width => "8%" do
+      span pi.ingredient.calculate_kcal_weight(pi.weight)
     end
 
     column do

@@ -82,6 +82,22 @@ class Plan < ActiveRecord::Base
     end
   end
 
+  def total_kcal
+    res = 0
+    Meal.find_for(self.user.setting(:meals)).each do |m|
+      res += self.meal_total_kcal(m)
+    end
+    res
+  end
+
+  def meal_total_kcal(meal)
+    res = 0
+    self.plan_items.where(:meal_id => meal.id).each do |i|
+      res += i.calculate_kcal_weight(i.weight).to_f
+    end
+    res.round(2)
+  end
+
   def total_weight
     res = 0
     Meal.find_for(self.user.setting(:meals)).each do |m|
