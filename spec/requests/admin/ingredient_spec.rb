@@ -9,7 +9,7 @@ describe "Ingredients" do
     end
 
     context "create new" do
-      it "should not create for someone ration" do
+      it "should create for someone ration" do
         user_2 = Factory.create(:user)
         ration = Factory.create(:ration, :user => user_2)
         ration.customers << admin
@@ -20,7 +20,14 @@ describe "Ingredients" do
         page.should have_link('New Ingredient')
 
         visit new_admin_ingredient_path
-        page.should have_selector('div.flash_alert', :text => "You are not authorized to perform this action.")
+        fill_in "Name", :with => "Test"
+        fill_in "Portion", :with => 100
+
+        click_button "Create Ingredient"
+
+        page.should have_selector("h2#page_title", "Test")
+        page.should have_selector("tr.row-ration_id/td/a", ration.name)
+        page.should have_selector("tr.row-user_id/td/a", admin.email)
       end
 
       it "should create for own ration" do
@@ -36,7 +43,7 @@ describe "Ingredients" do
     end
 
     it "should eat ingredient" do
-      ingredient = Factory.create(:ingredient_sample)
+      ingredient = Factory.create(:ingredient_sample, :user => admin)
 
       visit admin_ingredients_path
 

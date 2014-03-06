@@ -18,6 +18,7 @@ ActiveAdmin.register Eaten do
     column("Proteins") { |c| c.proteins.round(2) }
     column("Fats") { |c| c.fats.round(2) }
     column("Carbs") { |c| c.carbs.round(2) }
+    column :kcal
     column :created_at
 
     default_actions

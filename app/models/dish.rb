@@ -1,4 +1,5 @@
 class Dish < ActiveRecord::Base
+  include Calorie
   attr_accessible :name, :description, :dish_compositions_attributes
 
   has_many :dish_compositions, :dependent => :destroy

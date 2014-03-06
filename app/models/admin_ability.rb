@@ -13,8 +13,9 @@ class AdminAbility
     can :manage, Dish
     can :manage, Eaten
 
-    can :read, Ingredient
-    can :change, Ingredient, :ration => {:user_id => user.id}
+    #can :read, Ingredient
+    #can :change, Ingredient, :ration => {:user_id => user.id}
+    can :manage, Ingredient
 
     can :manage, ActiveAdmin::Page, :name => "Settings"
     can :manage, Ration

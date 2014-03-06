@@ -1,4 +1,5 @@
 class Eaten < ActiveRecord::Base
+  include Calorie
   attr_accessible :weight, :eatable_id, :eatable_type
 
   belongs_to :eatable, :polymorphic => true

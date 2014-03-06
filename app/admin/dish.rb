@@ -19,6 +19,7 @@ ActiveAdmin.register Dish do
     column :proteins
     column :fats
     column :carbs
+    column :kcal
     #column :updated_at
 
     #actions :default => true do |d|
@@ -85,6 +86,10 @@ ActiveAdmin.register Dish do
       index! do |format|
         @dishes = current_user.all_dishes.page(params[:page])
       end
+    end
+
+    def show
+      @dish = Dish.find(params[:id])
     end
   end
 

@@ -12,6 +12,7 @@ class User < ActiveRecord::Base
   has_many :own_rations, :class_name => Ration, :dependent => :destroy
   has_and_belongs_to_many :shared_rations, :class_name => Ration
   has_many :dishes, :dependent => :destroy
+  has_many :ingredients, :dependent => :destroy
 
   attr_accessible :email, :password, :password_confirmation, :remember_me
   attr_accessible :email, :password, :password_confirmation, :role_ids, :signing_attributes, :as => :admin
@@ -27,6 +28,10 @@ class User < ActiveRecord::Base
 
   def all_dishes
     Dish.by_ration_and_own(self.setting(:ration), self)
+  end
+
+  def all_ingredients
+    Ingredient.by_ration_and_own(self.setting(:ration), self)
   end
 
   def setting(var)

@@ -61,4 +61,4 @@ group :development, :test do
   gem 'launchy'
 end
 
-
+gem 'quiet_assets', :group => :development
