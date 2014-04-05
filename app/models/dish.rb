@@ -52,6 +52,7 @@ class Dish < ActiveRecord::Base
     dish_compositions.each do |dc|
       self.weight += dc.weight || 0
       self.proteins += dc.ingredient.calculate_nutrient_weight(:proteins, dc.weight)
+      #p "PROTEINS: #{self.proteins}"
       self.fats += dc.ingredient.calculate_nutrient_weight(:fats, dc.weight)
       self.carbs += dc.ingredient.calculate_nutrient_weight(:carbs, dc.weight)
     end

@@ -8,15 +8,10 @@ ActiveAdmin.register Ingredient do
 
   action_item :only => [:index] do
     link_to "New Ingredient", new_admin_ingredient_path
+  end
 
-    #ingredient = Ingredient.new
-    #ingredient.ration = Ration.find(current_user.setting(:ration))
-
-    #if authorized? :new, ingredient
-      #link_to "New Ingredient", new_admin_ingredient_path
-    #else
-      #link_to "New Ingredient", nil, :data => {:confirm => "You can't create Ingredient for current Ration. Please choose your own Ration first."}
-    #end
+  action_item :only => [:show] do
+    ingredient_links(resource)
   end
 
   filter :name
@@ -40,14 +35,7 @@ ActiveAdmin.register Ingredient do
     #column :updated_at
 
     column "" do |resource|
-      links = ''.html_safe
-      #if authorized? :edit, resource
-      if current_user.id == resource.user.id
-        links += link_to I18n.t('active_admin.edit'), edit_resource_path(resource), :class => "member_link edit_link"
-        links += link_to I18n.t('active_admin.delete'), resource_path(resource), :method => :delete, :data => {:confirm => I18n.t('active_admin.delete_confirmation')}, :class => "member_link delete_link"
-      end
-      links += link_to "Eat", new_admin_ingredient_eaten_path(resource)
-      links
+      ingredient_links(resource)
     end
   end
 

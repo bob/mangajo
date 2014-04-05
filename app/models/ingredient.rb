@@ -14,10 +14,20 @@ class Ingredient < ActiveRecord::Base
   PORTION_UNITS = {:gramm => "g", :item => "item", :teaspoon => "t.s."}
 
   validates_presence_of :name, :portion, :portion_unit
+
   after_initialize :after_init
+  after_update :recalculate_dependencies
 
   def after_init
     self.portion_unit ||= PORTION_UNITS.invert["g"]
+  end
+
+  def recalculate_dependencies
+    if portion_changed? or carbs_changed? or fats_changed? or proteins_changed?
+      # calls order below is important
+      self.dish_compositions.each { |dc| dc.save }
+      self.dishes.each{ |d| d.save }
+    end
   end
 
   def self.by_ration_and_own(ration_id, user = nil)
@@ -34,6 +44,7 @@ class Ingredient < ActiveRecord::Base
     when "gramm"
       weight * self.send(nutrient) / self.portion
     when "item"
+      #p "WEIGHT: #{weight}, #{nutrient}: #{self.send(nutrient)}, PORTION: #{self.portion}"
       weight * self.send(nutrient) / self.portion
     else
       0
