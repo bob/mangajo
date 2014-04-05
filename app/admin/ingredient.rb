@@ -31,7 +31,7 @@ ActiveAdmin.register Ingredient do
       auto_link c, c.name
     end
     column :portion do |p|
-      "#{p.portion} #{Ingredient::PORTION_UNITS[p.portion_unit.to_sym]}"
+      "#{p.portion} #{(Ingredient::PORTION_UNITS[:gramm] + "/") if p.portion_unit != "gramm" }#{Ingredient::PORTION_UNITS[p.portion_unit.to_sym]}"
     end
     column :proteins
     column :fats

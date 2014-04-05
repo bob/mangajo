@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140305200245) do
+ActiveRecord::Schema.define(version: 20140313113821) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 20140305200245) do
     t.integer  "weight"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "portions",      default: 0
   end
 
   create_table "dishes", force: true do |t|

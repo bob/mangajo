@@ -52,7 +52,13 @@ ActiveAdmin.register Dish do
         column "name" do |appointment|
           auto_link(appointment.ingredient, appointment.ingredient.name)
         end
-        column :weight
+        column "quantity" do |c|
+          if c.portion_unit == "item"
+            "#{c.portions} #{c.portion_unit.pluralize} (#{c.weight} g)"
+          else
+            "#{c.weight} g"
+          end
+        end
       end
     end
 
@@ -67,9 +73,10 @@ ActiveAdmin.register Dish do
     end
 
     f.has_many :dish_compositions, :allow_destroy => true, :heading => "Ingredients" do |i|
-      i.inputs "Ingredients" do
-        i.input :ingredient_id, :as => :select, :collection => Ingredient.by_ration(current_user.setting(:ration))
-        i.input :weight
+      i.inputs "Ingredient #{i.object.new_record?} #{i.object.portion_unit}" do
+        i.input :ingredient_id, :as => :select, :collection => ingredients_options_with_portion_unit(i.object.ingredient_id), :input_html => {:class => "dish_ingredient_select"}
+        i.input :portions, :wrapper_html => ({:style => "display: none;"} if i.object.portion_unit == "gramm" or i.object.new_record?)
+        i.input :weight, :wrapper_html => ({:style => "display: none;"} if i.object.portion_unit == "item" or i.object.new_record?)
       end
     end
 

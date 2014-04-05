@@ -33,6 +33,8 @@ class Ingredient < ActiveRecord::Base
     case self.portion_unit
     when "gramm"
       weight * self.send(nutrient) / self.portion
+    when "item"
+      weight * self.send(nutrient) / self.portion
     else
       0
     end

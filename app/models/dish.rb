@@ -5,6 +5,7 @@ class Dish < ActiveRecord::Base
   has_many :dish_compositions, :dependent => :destroy
   has_many :ingredients, :through => :dish_compositions
   has_many :eatens, :as => :eatable
+  has_many :plan_items, :dependent => :destroy
   belongs_to :user
 
   #scope :by_ration, ->(ration_id) { includes(:ingredients).where(:ingredients => {:ration_id => ration_id }).order("dishes.created_at DESC") }

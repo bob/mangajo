@@ -33,7 +33,7 @@ class Plan < ActiveRecord::Base
           p "Proteins target portion: #{proteins_target_portion}"
 
           # get weight new value (100 here is portion in gramms)
-          weight_new = (proteins_target_portion * 100 / piing.ingredient.proteins).round(2)
+          weight_new = (proteins_target_portion * piing.ingredient.portion / piing.ingredient.proteins).round(2)
           p "Weight new value: #{weight_new}"
 
           piing.weight = weight_new
