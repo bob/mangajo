@@ -55,3 +55,5 @@ i.plan_item_ingredients.each do |pi|
 
   end
 end
+span "&nbsp".html_safe
+
