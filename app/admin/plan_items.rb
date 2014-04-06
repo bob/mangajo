@@ -21,7 +21,10 @@ ActiveAdmin.register PlanItem do
     end
 
     def create
-      create!{ admin_plan_path(@plan) }
+      create!{
+        @plan_item.update_attribute(:weight, @plan_item.dish.weight)
+        admin_plan_path(@plan)
+      }
     end
 
     def update

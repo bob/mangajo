@@ -14,8 +14,14 @@ class PlanItem < ActiveRecord::Base
   after_create :add_ingredients
 
   def add_ingredients
-    self.dish.ingredients.each do |ingredient|
-      self.ingredients << ingredient
+    #self.dish.ingredients.each do |ingredient|
+      #self.ingredients << ingredient
+    #end
+
+    self.dish.dish_compositions.each do |dc|
+      pi = self.plan_item_ingredients.build(:weight => dc.weight)
+      pi.ingredient = dc.ingredient
+      pi.save
     end
   end
 
