@@ -30,6 +30,15 @@ class PlanItem < ActiveRecord::Base
     end
   end
 
+  def update_ingredients
+    self.plan_item_ingredients.destroy_all
+    add_ingredients
+  end
+
+  def display_name
+    eatable.name
+  end
+
   def calculate_nutrient_weight(nutrient, weight)
     sum = 0
     self.plan_item_ingredients.each do |piing|
