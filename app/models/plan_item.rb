@@ -1,27 +1,32 @@
 class PlanItem < ActiveRecord::Base
   include Calorie
+  attr_accessible :plan_id, :meal_id, :weight, :eatable_id, :eatable_type
+
+  attr_accessor :dish_id, :ingredient_id
 
   belongs_to :plan
-  belongs_to :dish
+  belongs_to :eatable, :polymorphic => true
   belongs_to :meal
   has_many :plan_item_ingredients, :dependent => :destroy
   has_many :ingredients, :through => :plan_item_ingredients
 
-  attr_accessible :plan_id, :dish_id, :meal_id, :weight
-
-  validates :plan, :dish, :meal, :presence => true
+  validates :plan, :eatable, :meal, :presence => true
 
   after_create :add_ingredients
 
   def add_ingredients
-    #self.dish.ingredients.each do |ingredient|
-      #self.ingredients << ingredient
-    #end
-
-    self.dish.dish_compositions.each do |dc|
-      pi = self.plan_item_ingredients.build(:weight => dc.weight)
-      pi.ingredient = dc.ingredient
+    case self.eatable_type
+    when "Dish"
+      self.eatable.dish_compositions.each do |dc|
+        pi = self.plan_item_ingredients.build(:weight => dc.weight)
+        pi.ingredient = dc.ingredient
+        pi.save
+      end
+    when "Ingredient"
+      pi = self.plan_item_ingredients.build(:weight => eatable.weight)
+      pi.ingredient = eatable
       pi.save
+    else
     end
   end
 
@@ -43,8 +48,13 @@ class PlanItem < ActiveRecord::Base
 
   def ingredients_percentage
     res = {}
-    self.plan_item_ingredients.each do |piing|
-      res[piing.id] = (self.dish.dish_compositions.find_by_ingredient_id(piing.ingredient_id).weight.to_f * 100 / self.dish.weight).round(2)
+    if eatable_type == "Dish"
+      self.plan_item_ingredients.each do |piing|
+        res[piing.id] = (self.eatable.dish_compositions.find_by_ingredient_id(piing.ingredient_id).weight.to_f * 100 / self.eatable.weight).round(2)
+      end
+    elsif eatable_type == "Ingredient"
+      piing = self.plan_item_ingredients.first
+      res[piing.id] = 100
     end
     res
   end
@@ -52,7 +62,12 @@ class PlanItem < ActiveRecord::Base
   def ingredients_with_protein_percentage
     weights = {}
     self.pi_ingredients_with_protein.each do |piing|
-      weights[piing.id] = self.dish.dish_compositions.find_by_ingredient_id(piing.ingredient_id).weight.to_f
+      if eatable_type == "Dish"
+        weights[piing.id] = self.eatable.dish_compositions.find_by_ingredient_id(piing.ingredient_id).weight.to_f
+      elsif eatable_type == "Ingredient"
+        weights[piing.id] = self.eatable.weight
+      end
+
     end
 
     res = {}

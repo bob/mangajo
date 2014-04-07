@@ -1,6 +1,6 @@
 columns :class => "columns #{(index % 2 > 0) ? "even" : "odd"}" do
   column :min_width => "30%" do
-    span auto_link(i, i.dish.name)
+    span auto_link(i, i.eatable.name)
   end
 
   column :max_width => "8%" do

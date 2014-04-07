@@ -5,6 +5,7 @@ class Ingredient < ActiveRecord::Base
   has_many :dish_compositions, :dependent => :restrict_with_exception
   has_many :dishes, :through => :dish_compositions
   has_many :eatens, :as => :eatable
+  has_many :plan_items, :dependent => :destroy, :as => :eatable
   has_many :plan_item_ingredients, :dependent => :destroy
   belongs_to :ration
   belongs_to :user
@@ -30,12 +31,8 @@ class Ingredient < ActiveRecord::Base
     end
   end
 
-  def self.by_ration_and_own(ration_id, user = nil)
-    ration = Ration.find(ration_id)
-    user ||= ration.user
-
-    self.where("ration_id = ? OR (ration_id = ? AND user_id = ?)", ration.id, ration.id, user.id)
-    .order("ingredients.created_at DESC")
+  def weight
+    self.portion
   end
 
   def calculate_nutrient_weight(nutrient, weight)
@@ -51,4 +48,13 @@ class Ingredient < ActiveRecord::Base
       0
     end
   end
+
+  def self.by_ration_and_own(ration_id, user = nil)
+    ration = Ration.find(ration_id)
+    user ||= ration.user
+
+    self.where("ration_id = ? OR (ration_id = ? AND user_id = ?)", ration.id, ration.id, user.id)
+    .order("ingredients.created_at DESC")
+  end
+
 end

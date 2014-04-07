@@ -24,7 +24,7 @@ describe Plan do
       dish_com_2 = Factory.create(:dish_composition, :weight => 15, :dish => dish, :ingredient => ing_2)
 
       plan = Factory.create(:plan_second, :user => user)
-      plan_item_1 = Factory.create(:plan_item, :meal_id => 1, :plan => plan, :dish => dish, :weight => 0)
+      plan_item_1 = Factory.create(:plan_item, :meal_id => 1, :plan => plan, :eatable => dish, :weight => 0)
       piing_1 = Factory.create(:plan_item_ingredient, :plan_item => plan_item_1, :ingredient => ing_1, :weight => 0)
       piing_2 = Factory.create(:plan_item_ingredient, :plan_item => plan_item_1, :ingredient => ing_2, :weight => 0)
 
@@ -52,7 +52,7 @@ describe Plan do
         @dish_com_4 = Factory.create(:dish_composition, :weight => 12, :dish => @dish, :ingredient => @ing_4)
 
         @plan = Factory.create(:plan_second, :user => user)
-        @plan_item_1 = Factory.create(:plan_item, :meal_id => 1, :plan => @plan, :dish => @dish, :weight => 0)
+        @plan_item_1 = Factory.create(:plan_item, :meal_id => 1, :plan => @plan, :eatable => @dish, :weight => 0)
         @piing_1 = Factory.create(:plan_item_ingredient, :plan_item => @plan_item_1, :ingredient => @ing_1, :weight => 0)
         @piing_2 = Factory.create(:plan_item_ingredient, :plan_item => @plan_item_1, :ingredient => @ing_2, :weight => 0)
         @piing_3 = Factory.create(:plan_item_ingredient, :plan_item => @plan_item_1, :ingredient => @ing_3, :weight => 0)

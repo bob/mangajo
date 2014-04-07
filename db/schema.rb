@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140313113821) do
+ActiveRecord::Schema.define(version: 20140406211132) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -84,11 +84,12 @@ ActiveRecord::Schema.define(version: 20140313113821) do
 
   create_table "plan_items", force: true do |t|
     t.integer  "plan_id"
-    t.integer  "dish_id"
+    t.integer  "eatable_id"
     t.integer  "meal_id"
-    t.float    "weight",     default: 0.0
+    t.float    "weight",       default: 0.0
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "eatable_type", default: "Dish"
   end
 
   create_table "plans", force: true do |t|

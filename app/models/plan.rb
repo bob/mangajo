@@ -13,7 +13,7 @@ class Plan < ActiveRecord::Base
       items = self.plan_items.where(:meal_id => m.id)
 
       items.each_with_index do |i, index|
-        p "Item: #{i.dish.name}"
+        p "Item: #{i.eatable.name}"
         # get how much proteins should be eated for this meal (equal for each dish), in gramms
         proteins_portion = Meal.meal_target(:proteins, m, user) / items.count
         p "Proteins portion: #{self.user.setting(:proteins).to_f} * #{Meal.meal_percents(m, self.user)} / 100 / #{items.count} = #{proteins_portion}g"
@@ -47,6 +47,7 @@ class Plan < ActiveRecord::Base
         if i.pi_ingredients_without_protein.count > 0
           p "Ingredients with protein new weight: #{item_weight}"
           p "Percentage sum: #{percentage_sum}"
+          next if percentage_sum <= 0
 
           # get new weight for all non-protein ingredients
           non_protein_weight = ((item_weight * 100 / percentage_sum) - item_weight).round(2)
