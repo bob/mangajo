@@ -30,6 +30,11 @@ class PlanItem < ActiveRecord::Base
     end
   end
 
+  def recalculate_weight
+    weight = self.plan_item_ingredients.sum(:weight) rescue 0
+    self.update_attribute(:weight, weight)
+  end
+
   def update_ingredients
     self.plan_item_ingredients.destroy_all
     add_ingredients

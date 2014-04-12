@@ -1,5 +1,6 @@
 ActiveAdmin.register Dish do
   config.batch_actions = false
+  config.clear_action_items!
 
   scope_to :current_user
 
@@ -8,10 +9,13 @@ ActiveAdmin.register Dish do
   filter :fats
   filter :carbs
 
+  action_item :only => [:show] do
+    dish_links(resource)
+  end
+
   index do
     #selectable_column
 
-    #column :id
     column :name do |c|
       auto_link c, c.name
     end
@@ -20,19 +24,9 @@ ActiveAdmin.register Dish do
     column :fats
     column :carbs
     column :kcal
-    #column :updated_at
 
-    #actions :default => true do |d|
-      #link_to "Eat", new_admin_dish_eaten_path(d)
-    #end
     column "" do |resource|
-      links = ''.html_safe
-      if current_user.id == resource.user.id
-        links += link_to I18n.t('active_admin.edit'), edit_resource_path(resource), :class => "member_link edit_link"
-        links += link_to I18n.t('active_admin.delete'), resource_path(resource), :method => :delete, :data => {:confirm => I18n.t('active_admin.delete_confirmation')}, :class => "member_link delete_link"
-      end
-      links += link_to "Eat", new_admin_dish_eaten_path(resource)
-      links
+      dish_links(resource)
     end
 
   end

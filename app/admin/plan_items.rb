@@ -12,8 +12,6 @@ ActiveAdmin.register PlanItem do
     f.inputs do
       f.input :ingredient_id, :as => :select, :collection => current_user.all_ingredients
     end
-
-
     f.actions
   end
 
