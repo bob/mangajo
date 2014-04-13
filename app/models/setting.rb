@@ -1,6 +1,6 @@
 class Setting < ActiveRecord::Base #RailsSettings::ScopedSettings
   attr_accessible :var, :value
-  attr_accessor :title, :description
+  attr_accessor :title, :description, :hidden
 
   belongs_to :thing, :polymorphic => true
   validates :value, :presence => true
@@ -30,11 +30,12 @@ class Setting < ActiveRecord::Base #RailsSettings::ScopedSettings
     if self.var.present?
       self.title = get_conf_value(self.var, "title")
       self.description = get_conf_value(self.var, "description")
+      self.hidden = get_conf_value(self.var, "hidden")
     end
   end
 
   def to_hash
-    {"var" => self.var, "title" => self.title, "description" => self.description, "value" => self.value}
+    {"var" => self.var, "title" => self.title, "description" => self.description, "value" => self.value, "hidden" => self.hidden}
   end
 
   def get_conf_value(var_name, value_name)
@@ -52,6 +53,7 @@ class Setting < ActiveRecord::Base #RailsSettings::ScopedSettings
     n.title = h["title"]
     n.description = h["description"]
     n.value = h["value"]
+    n.hidden = h["hidden"]
     n
   end
 

@@ -25,6 +25,7 @@ ActiveAdmin.register_page "Settings" do
 
   content do
     current_user.full_settings.each do |s|
+      next if s.hidden
       para do
         form :action => admin_settings_update_path, :method => :post do |f|
           f.input :type => :hidden, :name => 'authenticity_token', :value => form_authenticity_token.to_s

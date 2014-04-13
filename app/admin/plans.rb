@@ -20,7 +20,7 @@ ActiveAdmin.register Plan do
   show do |s|
     render :partial => "show_top", :locals => {:s => s}
 
-    Meal.find_for(current_user.setting(:meals)).each do |m|
+    Meal.find_for(s.meals_num).each do |m|
       render :partial => "show_meal", :locals => {:m => m, :current_user => current_user, :s => s}
     end
   end
@@ -28,6 +28,7 @@ ActiveAdmin.register Plan do
   form do |f|
     f.inputs do
       f.input :name
+      f.input :meals_num, :as => :select, :collection => (1...8)
       f.input :description
     end
 

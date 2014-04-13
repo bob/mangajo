@@ -6,18 +6,18 @@ class Meal < ActiveRecord::Base
   attr_accessible :id, :name
 
   class << self
-    def meal_target(nutrient, meal, user)
+    def meal_target(nutrient, meal, user, meals_num)
       if nutrient == :carbs
-        a = self.carbs_allocation_presets(user.setting(:meals))
+        a = self.carbs_allocation_presets(meals_num)
         percents = a[meal.id]
       else
-        percents = self.meal_percents(meal, user)
+        percents = self.meal_percents(meal, meals_num)
       end
       (user.setting(nutrient).to_f * percents / 100).round(2)
     end
 
-    def meal_percents(meal, user)
-      a = self.allocation_presets(user.setting(:meals))
+    def meal_percents(meal, meals_num)
+      a = self.allocation_presets(meals_num)
       a[meal.id]
     end
 

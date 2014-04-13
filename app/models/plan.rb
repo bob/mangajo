@@ -1,22 +1,24 @@
 class Plan < ActiveRecord::Base
-  attr_accessible :name, :description
+  attr_accessible :name, :description, :meals_num
 
   belongs_to :user
   has_many :plan_items, :dependent => :destroy
+
+  validates :meals_num, :inclusion => {:in => (1...8)}
 
 
   def auto_weights!
     p "AUTO: proteins target: #{self.user.setting(:proteins)}"
     Meal.find_for(self.user.setting(:meals)).each do |m|
-      p "Meal: #{m.id} #{m.name} #{Meal.meal_percents(m, self.user)}%"
+      p "Meal: #{m.id} #{m.name} #{Meal.meal_percents(m, self.meals_num)}%"
 
       items = self.plan_items.where(:meal_id => m.id)
 
       items.each_with_index do |i, index|
         p "Item: #{i.eatable.name}"
         # get how much proteins should be eated for this meal (equal for each dish), in gramms
-        proteins_portion = Meal.meal_target(:proteins, m, user) / items.count
-        p "Proteins portion: #{self.user.setting(:proteins).to_f} * #{Meal.meal_percents(m, self.user)} / 100 / #{items.count} = #{proteins_portion}g"
+        proteins_portion = Meal.meal_target(:proteins, m, user, self.meals_num) / items.count
+        p "Proteins portion: #{self.user.setting(:proteins).to_f} * #{Meal.meal_percents(m, self.meals_num)} / 100 / #{items.count} = #{proteins_portion}g"
 
         # array of all ingredients percentage
         ing_percentages = i.ingredients_percentage
