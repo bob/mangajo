@@ -1,7 +1,7 @@
 ActiveAdmin.register Ration do
   config.batch_actions = false
   #menu :priority => 1
-  scope_to :current_user, :association_method => :own_rations
+  scope_to :current_user, :association_method => :all_rations
 
   filter :name
   filter :created_at
@@ -10,11 +10,12 @@ ActiveAdmin.register Ration do
     #selectable_column
     #column :id
     column :name do |c|
-      auto_link c, c.name
+      auto_link(c, c.name)
     end
     column :description
     column :ingredients do |c|
-      c.ingredients.count
+      #link_to c.ingredients.count, admin_rationingredients_path(:ration_id => c.id)
+      link_to c.ingredients.count, admin_ration_ingredients_path(:ration_id => c.id)
     end
     column :updated_at
 
@@ -41,11 +42,6 @@ ActiveAdmin.register Ration do
   end
 
   controller do
-    def index
-      index! do |format|
-        @rations = current_user.all_rations.page(params[:page])
-      end
-    end
   end
 
 

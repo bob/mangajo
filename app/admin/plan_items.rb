@@ -4,11 +4,14 @@ ActiveAdmin.register PlanItem do
   form do |f|
     f.inputs do
       f.input :dish_id, :as => :select, :collection => current_user.all_dishes
+      #f.form_buffers.last << content_tag(:div, link_to("Create new Dish", new_admin_dish_path), :style => "padding-left: 10px;")
       f.input :meal_id, :as => :hidden
     end
+
     f.form_buffers.last << Arbre::Context.new({}, f.template) do
-      span "OR"
+      div "OR "
     end
+
     f.inputs do
       f.input :ingredient_id, :as => :select, :collection => current_user.all_ingredients
     end

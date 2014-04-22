@@ -7,6 +7,7 @@ Mealness::Application.routes.draw do
   # new_admin_eaten GET        /admin/eatens/new(.:format)               admin/eatens#new
   get 'admin/dishes/:dish_id/eatens/new' => 'admin/eatens#new', :as => :new_admin_dish_eaten
   get 'admin/ingredients/:ingredient_id/eatens/new' => 'admin/eatens#new', :as => :new_admin_ingredient_eaten
+  get 'admin/rations/:ration_id/ingredients' => 'admin/ingredients#index', :as => :admin_ration_ingredients
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
