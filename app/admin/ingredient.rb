@@ -50,6 +50,7 @@ ActiveAdmin.register Ingredient do
     column :name do |c|
       auto_link c, c.name
     end
+    column :group
     column :portion do |p|
       "#{p.portion} #{(Ingredient::PORTION_UNITS[:gramm] + "/") if p.portion_unit != "gramm" }#{Ingredient::PORTION_UNITS[p.portion_unit.to_sym]}"
     end

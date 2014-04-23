@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140413142700) do
+ActiveRecord::Schema.define(version: 20140423131814) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -61,6 +61,12 @@ ActiveRecord::Schema.define(version: 20140413142700) do
     t.integer  "user_id"
   end
 
+  create_table "ingredient_groups", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "ingredients", force: true do |t|
     t.string   "name"
     t.integer  "portion"
@@ -72,6 +78,7 @@ ActiveRecord::Schema.define(version: 20140413142700) do
     t.string   "portion_unit"
     t.integer  "ration_id"
     t.integer  "user_id"
+    t.integer  "ingredient_group_id", default: 0
   end
 
   create_table "plan_item_ingredients", force: true do |t|

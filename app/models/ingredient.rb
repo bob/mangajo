@@ -1,6 +1,6 @@
 class Ingredient < ActiveRecord::Base
   include Calorie
-  attr_accessible :name, :portion, :portion_unit, :carbs, :fats, :proteins
+  attr_accessible :name, :portion, :portion_unit, :carbs, :fats, :proteins, :ingredient_group_id
 
   has_many :dish_compositions, :dependent => :restrict_with_exception
   has_many :dishes, :through => :dish_compositions
@@ -9,6 +9,7 @@ class Ingredient < ActiveRecord::Base
   has_many :plan_item_ingredients, :dependent => :destroy
   belongs_to :ration
   belongs_to :user
+  belongs_to :group, :class_name => IngredientGroup, :foreign_key => :ingredient_group_id
 
   scope :by_ration, ->(ration_id) { where(:ration_id => ration_id)}
 
