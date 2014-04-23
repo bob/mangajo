@@ -16,6 +16,21 @@ ActiveAdmin.register Ingredient do
     crumbs
   end
 
+  member_action :copy_to_my, :method => :post do
+    ingredient = Ingredient.find params[:id]
+    new_ingredient = ingredient.dup
+    new_ingredient.user = current_user
+    new_ingredient.ration_id = current_user.setting(:ration)
+
+    if new_ingredient.save
+      flash[:notice] = "Ingredient copied"
+    else
+      flash[:error] = "Ingredient NOT copied"
+    end
+
+    redirect_to request.referer
+  end
+
   action_item :only => [:index] do
     link_to "New Ingredient", new_admin_ingredient_path
   end
