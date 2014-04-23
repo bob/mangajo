@@ -53,7 +53,8 @@ class Ingredient < ActiveRecord::Base
     ration = Ration.find(ration_id)
     user ||= ration.user
 
-    self.where("ration_id = ? OR (ration_id = ? AND user_id = ?)", ration.id, ration.id, user.id)
+    #self.where("ration_id = ? OR (ration_id = ? AND user_id = ?)", ration.id, ration.id, user.id)
+    self.where("ration_id = ? AND user_id = ?", ration.id, user.id)
     .order("ingredients.created_at DESC")
   end
 

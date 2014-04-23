@@ -9,6 +9,10 @@ ActiveAdmin.register Dish do
   filter :fats
   filter :carbs
 
+  action_item :only => [:index] do
+    link_to "New Dish", new_admin_dish_path
+  end
+
   action_item :only => [:show] do
     dish_links(resource)
   end

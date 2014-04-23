@@ -4,7 +4,8 @@ module ActiveAdmin::ViewsHelper #camelized file name
   end
 
   def ingredients_options_with_portion_unit(selected=nil)
-    ingredients = Ingredient.by_ration(current_user.setting(:ration)).map do |i|
+    #ingredients = Ingredient.by_ration(current_user.setting(:ration)).map do |i|
+    ingredients = current_user.all_ingredients.map do |i|
       [i.name, i.id, {:pu => i.portion_unit}]
     end
 

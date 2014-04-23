@@ -17,6 +17,23 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me
   attr_accessible :email, :password, :password_confirmation, :role_ids, :signing_attributes, :as => :admin
 
+  after_create :add_rations
+
+  def add_rations
+    def_ration = Ration.get_default
+    def_ration.customers << self
+    def_ration.save
+
+    ration = Ration.new
+    ration.user = self
+    ration.name = "My ration"
+    ration.save
+
+    setting = self.settings.build(:var => "ration")
+    setting.value = ration.id
+    setting.save
+  end
+
   def all_rations
     #(self.own_rations + self.shared_rations).sort! {|x,y| x.created_at <=> y.created_at} #=> accesible_by error
     #self.own_rations.merge(self.shared_rations) # => empty result

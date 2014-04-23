@@ -2,14 +2,9 @@ ActiveAdmin.register Ingredient do
   config.batch_actions = false
   config.clear_action_items! #unless can? :create, Ingredient
 
-  scope_to :current_user, :association_method => :all_ingredients, :unless => proc{ params[:ration_id] }
-  scope_to :if => proc{ params[:ration_id] } do
-    Ration.find(params[:ration_id])
-  end
-
   breadcrumb do
     crumbs = [
-        link_to("admin", admin_root_path)
+      link_to("admin", admin_root_path)
     ]
 
     if params[:ration_id]
@@ -17,7 +12,6 @@ ActiveAdmin.register Ingredient do
 
       crumbs += [link_to("rations", admin_rations_path)]
       crumbs += [link_to(ration.name, admin_ration_path(ration))]
-    else
     end
     crumbs
   end
@@ -68,6 +62,14 @@ ActiveAdmin.register Ingredient do
   end
 
   controller do
+    def scoped_collection
+      if params[:ration_id]
+        Ingredient.by_ration params[:ration_id]
+      else
+        current_user.all_ingredients
+      end
+    end
+
     def show
       @ingredient = Ingredient.find(params[:id])
     end

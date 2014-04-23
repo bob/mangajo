@@ -3,9 +3,21 @@ class Setting < ActiveRecord::Base #RailsSettings::ScopedSettings
   attr_accessor :title, :description, :hidden
 
   belongs_to :thing, :polymorphic => true
+
   validates :value, :presence => true
+  before_save :is_ration_owner
 
   after_initialize :set_attrs
+
+  def is_ration_owner
+    if self.var == "ration"
+      ration = Ration.find self.value
+      if thing_type == "User" and thing_id != ration.user.id
+        errors.add(:base, "You can choose as current only own ration")
+        return false
+      end
+    end
+  end
 
   def recalculate!
     if self.var == "weight"

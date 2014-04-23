@@ -3,6 +3,10 @@ ActiveAdmin.register Ration do
   #menu :priority => 1
   scope_to :current_user, :association_method => :all_rations
 
+  before_create do |ration|
+    ration.user = current_user
+  end
+
   filter :name
   filter :created_at
 
@@ -24,8 +28,8 @@ ActiveAdmin.register Ration do
       if current_user.id == resource.user.id
         links += link_to I18n.t('active_admin.edit'), edit_resource_path(resource), :class => "member_link edit_link"
         links += link_to I18n.t('active_admin.delete'), resource_path(resource), :method => :delete, :data => {:confirm => I18n.t('active_admin.delete_confirmation')}, :class => "member_link delete_link"
+        links += current_user.setting(:ration).to_i == resource.id ? "Current " : link_to("Choose", admin_settings_update_path(:var => "ration", :value => resource.id, :ref => admin_rations_path), :method => :post, :class => "member_link")
       end
-      links += current_user.setting(:ration).to_i == resource.id ? "Current " : link_to("Choose", admin_settings_update_path(:var => "ration", :value => resource.id, :ref => admin_rations_path), :method => :post, :class => "member_link")
 
       links
     end

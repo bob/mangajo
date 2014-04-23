@@ -2,7 +2,7 @@ ration:
   var: ration
   title: Current Ration
   description: Your current ration
-  value: 1
+  value: 0
   hidden: true
 
 height:
