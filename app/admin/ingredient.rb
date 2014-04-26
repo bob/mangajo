@@ -16,6 +16,10 @@ ActiveAdmin.register Ingredient do
     crumbs
   end
 
+  collection_action :rations_list, :method => :get, :title => "Rations" do
+    render :template => "admin/ingredients/rations", :locals => {:rations => current_user.all_rations}
+  end
+
   member_action :copy_to_my, :method => :post do
     ingredient = Ingredient.find params[:id]
     new_ingredient = ingredient.dup
@@ -24,11 +28,18 @@ ActiveAdmin.register Ingredient do
 
     if new_ingredient.save
       flash[:notice] = "Ingredient copied"
+
+      case params[:ref]
+      when "edit_selected"
+        redirect_to edit_admin_ingredient_path(new_ingredient)
+      else
+        redirect_to request.referer
+      end
     else
       flash[:error] = "Ingredient NOT copied"
+      redirect_to request.referer
     end
 
-    redirect_to request.referer
   end
 
   action_item :only => [:index] do
@@ -39,7 +50,12 @@ ActiveAdmin.register Ingredient do
     ingredient_links(resource)
   end
 
+  action_item :only => [:new] do
+    link_to("Copy from ration", rations_list_admin_ingredients_path)
+  end
+
   filter :name
+  filter :group, :as => :select, :collection => IngredientGroup.all
   filter :proteins
   filter :fats
   filter :carbs
@@ -52,13 +68,12 @@ ActiveAdmin.register Ingredient do
     end
     column :group
     column :portion do |p|
-      "#{p.portion} #{(Ingredient::PORTION_UNITS[:gramm] + "/") if p.portion_unit != "gramm" }#{Ingredient::PORTION_UNITS[p.portion_unit.to_sym]}"
+      portion_caption(p)
     end
     column :proteins
     column :fats
     column :carbs
     column :kcal
-    #column :updated_at
 
     column "" do |resource|
       ingredient_links(resource)
@@ -68,6 +83,7 @@ ActiveAdmin.register Ingredient do
   form  do |f|
     f.inputs  do
       f.input :name
+      f.input :group
       f.input :portion
       f.input :portion_unit, :collection => Ingredient::PORTION_UNITS.invert, :default => :gramm
       f.input :proteins
@@ -78,6 +94,8 @@ ActiveAdmin.register Ingredient do
   end
 
   controller do
+    #layout 'active_admin'
+
     def scoped_collection
       if params[:ration_id]
         Ingredient.by_ration params[:ration_id]

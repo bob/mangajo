@@ -10,6 +10,11 @@ ActiveAdmin.register Ration do
   filter :name
   filter :created_at
 
+  member_action :ingredients_list, :method => :get do
+    collection = resource.ingredients.page(params[:page])
+    render :template => "admin/rations/ingredients", :locals => {:ingredients => collection }
+  end
+
   index do
     #selectable_column
     #column :id

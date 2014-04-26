@@ -37,6 +37,10 @@ module ActiveAdmin::ViewsHelper #camelized file name
     links
   end
 
+  def portion_caption(p)
+    "#{p.portion} #{(Ingredient::PORTION_UNITS[:gramm] + "/") if p.portion_unit != "gramm" }#{Ingredient::PORTION_UNITS[p.portion_unit.to_sym]}"
+  end
+
 end
 
 
