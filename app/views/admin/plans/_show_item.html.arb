@@ -33,7 +33,7 @@ i.plan_item_ingredients.each do |pi|
     column :max_width => "8%" do
       span do
         if pi.ingredient.portion_unit == "item"
-          "#{(pi.weight / pi.ingredient.portion).round(2)} items"
+          "#{pi.portion.round(2)} items"
         else
           "#{pi.weight.round(2)} g"
         end

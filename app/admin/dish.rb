@@ -68,22 +68,26 @@ ActiveAdmin.register Dish do
 
     f.inputs "Details" do
       f.input :name
+      f.input :description
     end
 
     f.has_many :dish_compositions, :allow_destroy => true, :heading => "Ingredients" do |i|
-      i.inputs "Ingredient" do
-        i.input :ingredient_id, :as => :select, :collection => ingredients_options_with_portion_unit(i.object.ingredient_id), :input_html => {:class => "dish_ingredient_select"}
-        i.input :portions, :wrapper_html => ({:style => "display: none;"} if i.object.portion_unit == "gramm" or i.object.new_record?)
-        i.input :weight, :wrapper_html => ({:style => "display: none;"} if i.object.portion_unit == "item" or i.object.new_record?)
+      i.form_buffers.last << Arbre::Context.new({}, f.template) do
       end
-    end
 
-    f.inputs "Details" do
-      f.input :description
+      i.input :ingredient_id, :as => :select, :collection => ingredients_options_with_portion_unit(i.object.ingredient_id), :input_html => {:class => "dish_ingredient_select"}
+
+      i.input :portions, :wrapper_html => ({:style => "display: none;"} if i.object.portion_unit == "gramm" or i.object.new_record?)
+      i.input :weight, :wrapper_html => ({:style => "display: none;"} if i.object.portion_unit == "item" or i.object.new_record?)
     end
 
     f.actions
 
+    f.form_buffers.last << Arbre::Context.new({}, f.template) do
+      script :type => "text/javascript" do
+        "switch_dish_ingredients();"
+      end
+    end
   end
 
   controller do
