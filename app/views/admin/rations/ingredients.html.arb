@@ -1,9 +1,0 @@
-panel "Select an ingredient" do
-  paginated_collection(ingredients, download_links: false) do
-    table_for collection do
-      column("Name") { |e| link_to e.name, admin_ration_select_ingredients_path(e.id) }
-      column("Group") { |e| e.group.name }
-    end
-  end
-end
-

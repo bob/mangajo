@@ -13,7 +13,11 @@ ActiveAdmin.register PlanItem do
     end
 
     f.inputs do
-      f.input :ingredient_id, :as => :select, :collection => current_user.all_ingredients
+      f.input(:ingredient_id, :as => :select, :collection => current_user.all_ingredients)
+      f.form_buffers.last << Arbre::Context.new({}, f.template) do
+        li link_to "Create ingredient", new_admin_ingredient_path
+      end
+
     end
     f.actions
   end

@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :eaten do
-    eatable { Factory.create(:dish_sample) }
+    eatable { create(:dish_sample) }
     weight "200"
     proteins "38.5"
     fats "60.5"

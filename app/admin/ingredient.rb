@@ -29,7 +29,7 @@ ActiveAdmin.register Ingredient do
     if new_ingredient.save
       flash[:notice] = "Ingredient copied"
 
-      case params[:ref]
+      case params[:redirect]
       when "edit_selected"
         redirect_to edit_admin_ingredient_path(new_ingredient)
       else
@@ -51,7 +51,7 @@ ActiveAdmin.register Ingredient do
   end
 
   action_item :only => [:new] do
-    link_to("Copy from ration", rations_list_admin_ingredients_path)
+    link_to("Rations", rations_list_admin_ingredients_path, :title => "Copy from rations")
   end
 
   filter :name
@@ -81,6 +81,10 @@ ActiveAdmin.register Ingredient do
   end
 
   form  do |f|
+    f.form_buffers.last << Arbre::Context.new({}, f.template) do
+      div link_to("Return to start", session[:ingredient_referer])
+    end
+
     f.inputs  do
       f.input :name
       f.input :group
@@ -104,13 +108,30 @@ ActiveAdmin.register Ingredient do
       end
     end
 
+    def new
+      new! {
+        session[:ingredient_referer] = request.referer
+      }
+    end
+
     def show
       @ingredient = Ingredient.find(params[:id])
     end
 
     def create
-      create! do |format|
-        @ingredient.update_column(:ration_id, current_user.setting(:ration))
+      super do |success, failure|
+        success.html {
+          @ingredient.update_column(:ration_id, current_user.setting(:ration))
+          redirect_to session[:ingredient_referer] and return if session[:ingredient_referer]
+        }
+      end
+    end
+
+    def update
+      super do |success, failure|
+        success.html {
+          redirect_to session[:ingredient_referer] and return if session[:ingredient_referer]
+        }
       end
     end
 

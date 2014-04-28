@@ -7,8 +7,8 @@ describe DishComposition do
   end
 
   describe "Calculations" do
-    let(:dish) { Factory.create(:dish) }
-    let(:ingredient) { Factory.create(:ingredient, :portion_unit => "item", :portion => 55) }
+    let(:dish) { create(:dish) }
+    let(:ingredient) { create(:ingredient, :portion_unit => "item", :portion => 55) }
 
     it "should calc weight for portion" do
       dc = DishComposition.new
@@ -24,7 +24,7 @@ describe DishComposition do
     end
 
     it "should not calc" do
-      ingredient = Factory.create(:ingredient, :portion_unit => "gramm", :portion => 55)
+      ingredient = create(:ingredient, :portion_unit => "gramm", :portion => 55)
 
       dc = DishComposition.new
       dc.dish = dish

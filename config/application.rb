@@ -21,5 +21,6 @@ module Mealness
     # config.i18n.default_locale = :de
 
     config.encoding = "utf-8"
+    I18n.enforce_available_locales = false
   end
 end

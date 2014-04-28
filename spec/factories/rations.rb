@@ -6,6 +6,10 @@ FactoryGirl.define do
       name "Ration Second"
 
     end
+
+    factory :ration_user do
+      association :user, :factory => :user_simple
+    end
   end
 end
 

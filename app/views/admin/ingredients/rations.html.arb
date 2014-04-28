@@ -1,3 +1,5 @@
+div link_to("Return to start", session[:ingredient_referer])
+
 panel "Select a ration" do
   table_for rations do
     column("Name") { |e| link_to e.name, admin_ration_select_ingredients_path(e.id) }

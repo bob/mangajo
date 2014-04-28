@@ -7,8 +7,8 @@ describe Setting do
 
   context "Recalculating" do
     it "should calculate nutritions based on weight" do
-      user = Factory.create(:user)
-      weight_setting = Factory.create(:setting, :var => "weight", :value => 80)
+      user = create(:user)
+      weight_setting = create(:setting, :var => "weight", :value => 80)
       user.settings << weight_setting
 
       weight_setting.recalculate!

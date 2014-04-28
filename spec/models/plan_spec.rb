@@ -7,26 +7,26 @@ describe Plan do
   end
 
   describe "Auto weights" do
-    let(:user) { Factory.create(:user) }
+    let(:user) { create(:user) }
 
     before(:each) do
-      user.settings << Factory.create(:setting, :var => "meals", :value => 3)
-      user.settings << Factory.create(:setting, :var => "proteins", :value => 140)
+      user.settings << create(:setting, :var => "meals", :value => 3)
+      user.settings << create(:setting, :var => "proteins", :value => 140)
     end
 
     it "should calculate one dish, all ingredients with protein" do
 
-      dish = Factory.create(:flakes)
+      dish = create(:flakes)
 
-      ing_1 = Factory.create(:nestle_fitness)
-      ing_2 = Factory.create(:milk)
-      dish_com_1 = Factory.create(:dish_composition, :weight => 80, :dish => dish, :ingredient => ing_1)
-      dish_com_2 = Factory.create(:dish_composition, :weight => 15, :dish => dish, :ingredient => ing_2)
+      ing_1 = create(:nestle_fitness)
+      ing_2 = create(:milk)
+      dish_com_1 = create(:dish_composition, :weight => 80, :dish => dish, :ingredient => ing_1)
+      dish_com_2 = create(:dish_composition, :weight => 15, :dish => dish, :ingredient => ing_2)
 
-      plan = Factory.create(:plan_second, :user => user, :meals_num => 3)
-      plan_item_1 = Factory.create(:plan_item, :meal_id => 1, :plan => plan, :eatable => dish, :weight => 0)
-      piing_1 = Factory.create(:plan_item_ingredient, :plan_item => plan_item_1, :ingredient => ing_1, :weight => 0)
-      piing_2 = Factory.create(:plan_item_ingredient, :plan_item => plan_item_1, :ingredient => ing_2, :weight => 0)
+      plan = create(:plan_second, :user => user, :meals_num => 3)
+      plan_item_1 = create(:plan_item, :meal_id => 1, :plan => plan, :eatable => dish, :weight => 0)
+      piing_1 = create(:plan_item_ingredient, :plan_item => plan_item_1, :ingredient => ing_1, :weight => 0)
+      piing_2 = create(:plan_item_ingredient, :plan_item => plan_item_1, :ingredient => ing_2, :weight => 0)
 
       plan.auto_weights!
 
@@ -37,26 +37,26 @@ describe Plan do
 
     context "ingredients with zero protein" do
       before(:each) do
-        @dish = Factory.create(:omelet)
+        @dish = create(:omelet)
         # this is because there is one ingredient by default and weight changed after save
         @dish.ingredients.delete_all
         @dish.update_column(:weight, 158)
 
-        @ing_1 = Factory.create(:glair)
-        @ing_2 = Factory.create(:salt)
-        @ing_3 = Factory.create(:cheese)
-        @ing_4 = Factory.create(:sugar)
-        @dish_com_1 = Factory.create(:dish_composition, :weight => 91, :dish => @dish, :ingredient => @ing_1)
-        @dish_com_2 = Factory.create(:dish_composition, :weight => 5, :dish => @dish, :ingredient => @ing_2)
-        @dish_com_3 = Factory.create(:dish_composition, :weight => 50, :dish => @dish, :ingredient => @ing_3)
-        @dish_com_4 = Factory.create(:dish_composition, :weight => 12, :dish => @dish, :ingredient => @ing_4)
+        @ing_1 = create(:glair)
+        @ing_2 = create(:salt)
+        @ing_3 = create(:cheese)
+        @ing_4 = create(:sugar)
+        @dish_com_1 = create(:dish_composition, :weight => 91, :dish => @dish, :ingredient => @ing_1)
+        @dish_com_2 = create(:dish_composition, :weight => 5, :dish => @dish, :ingredient => @ing_2)
+        @dish_com_3 = create(:dish_composition, :weight => 50, :dish => @dish, :ingredient => @ing_3)
+        @dish_com_4 = create(:dish_composition, :weight => 12, :dish => @dish, :ingredient => @ing_4)
 
-        @plan = Factory.create(:plan_second, :user => user, :meals_num => 3)
-        @plan_item_1 = Factory.create(:plan_item, :meal_id => 1, :plan => @plan, :eatable => @dish, :weight => 0)
-        @piing_1 = Factory.create(:plan_item_ingredient, :plan_item => @plan_item_1, :ingredient => @ing_1, :weight => 0)
-        @piing_2 = Factory.create(:plan_item_ingredient, :plan_item => @plan_item_1, :ingredient => @ing_2, :weight => 0)
-        @piing_3 = Factory.create(:plan_item_ingredient, :plan_item => @plan_item_1, :ingredient => @ing_3, :weight => 0)
-        @piing_4 = Factory.create(:plan_item_ingredient, :plan_item => @plan_item_1, :ingredient => @ing_4, :weight => 0)
+        @plan = create(:plan_second, :user => user, :meals_num => 3)
+        @plan_item_1 = create(:plan_item, :meal_id => 1, :plan => @plan, :eatable => @dish, :weight => 0)
+        @piing_1 = create(:plan_item_ingredient, :plan_item => @plan_item_1, :ingredient => @ing_1, :weight => 0)
+        @piing_2 = create(:plan_item_ingredient, :plan_item => @plan_item_1, :ingredient => @ing_2, :weight => 0)
+        @piing_3 = create(:plan_item_ingredient, :plan_item => @plan_item_1, :ingredient => @ing_3, :weight => 0)
+        @piing_4 = create(:plan_item_ingredient, :plan_item => @plan_item_1, :ingredient => @ing_4, :weight => 0)
       end
 
       it "select ingredients with protein" do

@@ -12,8 +12,10 @@ ActiveAdmin.register Ingredient, :as => "SelectIngredient" do
   filter :carbs
 
   index :title => "Select ingredient" do
+    div link_to("Return to start", session[:ingredient_referer])
+
     column :name do |c|
-      link_to c.name, copy_to_my_admin_ingredient_path(c, :ref => "edit_selected"), :method => :post
+      link_to c.name, copy_to_my_admin_ingredient_path(c, :redirect => "edit_selected"), :method => :post
     end
     column :group do |c|
       c.group.name rescue nil

@@ -86,7 +86,7 @@ Spork.each_run do
   Rails.application.reload_routes!
 
   RSpec.configure do |config|
-    config.include Factory::Syntax::Methods
+    config.include FactoryGirl::Syntax::Methods
   end
 
 end

@@ -7,8 +7,8 @@ describe Eaten do
   end
 
   describe "Day" do
-    let(:past) { Factory.create(:eaten, :created_at => "2013-11-04 14:00") }
-    let(:present) { Factory.create(:eaten, :created_at => "2013-11-05 14:00") }
+    let(:past) { create(:eaten, :created_at => "2013-11-04 14:00") }
+    let(:present) { create(:eaten, :created_at => "2013-11-05 14:00") }
 
     before(:each) do
       Date.stub(:today).and_return("2013-11-05 15:00:00")

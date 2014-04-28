@@ -1,17 +1,21 @@
 require 'spec_helper'
 
 describe "Plan" do
-  let(:user) { Factory.create(:user) }
+  include DishHelper
+
+  let(:user) { create(:user) }
 
   before(:each) do
+    ration = create(:ration, :user => user)
+    ration_setting = create(:setting, :var => "ration", :value => ration.id)
+    user.settings << ration_setting
     login_as user
-    Factory.create(:ration, :id => 1)
   end
 
   describe "Manage" do
     it "should add a dish" do
-      plan = Factory.create(:plan, :user => user)
-      dish = Factory.create(:dish, :user => user)
+      plan = create(:plan, :user => user)
+      dish = create_dish_user_ration(:dish, user)
 
       visit admin_plan_path(plan)
 

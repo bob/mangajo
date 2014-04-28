@@ -2,19 +2,19 @@ FactoryGirl.define do
   factory :dish do
     sequence(:name) { |n| "Dish_#{n}" }
     dish_compositions { [
-      Factory.create(:dish_composition, :ingredient => Factory.create(:ingredient_empty))
+      create(:dish_composition, :ingredient => create(:ingredient_empty))
     ] }
 
     factory :dish_schema_a do
       dish_compositions { [
-        Factory.create(:dish_composition_schema_a1, :ingredient => Factory.create(:ingredient_schema_a1)),
-        Factory.create(:dish_composition_schema_a2, :ingredient => Factory.create(:ingredient_schema_a2))
+        create(:dish_composition_schema_a1, :ingredient => create(:ingredient_schema_a1)),
+        create(:dish_composition_schema_a2, :ingredient => create(:ingredient_schema_a2))
       ] }
     end
 
     factory :dish_sample do
       dish_compositions { [
-        Factory.create(:dish_composition, :ingredient => Factory.create(:ingredient, :proteins => 19.25, :fats => 30.25, :carbs => 41.25), :weight => 200)
+        create(:dish_composition, :ingredient => create(:ingredient, :proteins => 19.25, :fats => 30.25, :carbs => 41.25), :weight => 200)
       ] }
       name "Dish_sample"
       weight "200"
@@ -31,8 +31,8 @@ FactoryGirl.define do
       carbs "61.825"
 
       #dish_compositions { [
-        #Factory.create(:dish_composition, :weight => 80, :ingredient => Factory.create(:nestle_fitness)),
-        #Factory.create(:dish_composition, :weight => 15, :ingredient => Factory.create(:milk))
+        #create(:dish_composition, :weight => 80, :ingredient => create(:nestle_fitness)),
+        #create(:dish_composition, :weight => 15, :ingredient => create(:milk))
       #] }
 
     end

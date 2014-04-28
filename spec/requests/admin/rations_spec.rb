@@ -2,16 +2,16 @@ require 'spec_helper'
 
 describe "Rations" do
   describe "Index" do
-    let(:user) { Factory.create(:user) }
+    let(:user) { create(:user) }
 
     before(:each) do
       login_as user
     end
 
     it "should show own and shared rations" do
-      ration = Factory.create(:ration, :user => user)
-      user_2 = Factory.create(:user)
-      ration_2 = Factory.create(:ration, :user => user_2)
+      ration = create(:ration, :user => user)
+      user_2 = create(:user)
+      ration_2 = create(:ration, :user => user_2)
       user.shared_rations << ration_2
 
       visit admin_rations_path
@@ -40,9 +40,9 @@ describe "Rations" do
     end
 
     it "should not have delete link for not owned ration" do
-      ration = Factory.create(:ration, :user => user)
-      user_2 = Factory.create(:user)
-      ration_2 = Factory.create(:ration, :user => user_2)
+      ration = create(:ration, :user => user)
+      user_2 = create(:user)
+      ration_2 = create(:ration, :user => user_2)
       user.shared_rations << ration_2
 
       visit admin_rations_path

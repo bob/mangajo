@@ -54,7 +54,7 @@ gem "activerecord-tableless", "~> 1.0"
 
 group :development, :test do
   gem 'rspec-rails', '~> 2.0'
-  gem 'factory_girl_rails', "~> 1.0", :require => false
+  gem 'factory_girl_rails', "~> 4.0", :require => false
   gem 'shoulda-matchers'
   gem 'spork-rails', :github => 'sporkrb/spork-rails'
   gem 'capybara'
