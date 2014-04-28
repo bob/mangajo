@@ -9,6 +9,11 @@ ActiveAdmin.register Dish do
   filter :fats
   filter :carbs
 
+  collection_action :new_ingredient, :method => :post do
+    session[:new_dish] = params[:dish]
+    redirect_to new_admin_ingredient_path
+  end
+
   action_item :only => [:index] do
     link_to "New Dish", new_admin_dish_path
   end
@@ -73,6 +78,7 @@ ActiveAdmin.register Dish do
 
     f.has_many :dish_compositions, :allow_destroy => true, :heading => "Ingredients" do |i|
       i.form_buffers.last << Arbre::Context.new({}, f.template) do
+        li link_to("Create new ingredient", "#", :id => "new_ingredient_#{i.index}", :class => "new_ingredient")
       end
 
       i.input :ingredient_id, :as => :select, :collection => ingredients_options_with_portion_unit(i.object.ingredient_id), :input_html => {:class => "dish_ingredient_select"}
@@ -99,6 +105,14 @@ ActiveAdmin.register Dish do
 
     def show
       @dish = Dish.find(params[:id])
+    end
+
+    def new
+      if session[:new_dish]
+        @dish = Dish.new session[:new_dish]
+        session[:new_dish] = nil
+      end
+      super
     end
   end
 

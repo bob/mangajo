@@ -1,3 +1,23 @@
+$(function(){
+  $('#edit_dish, #new_dish').on("change", ".dish_ingredient_select", function() {
+    var num = $(this).parents("li[id^='dish_dish_compositions_attributes']").attr('id').match(/[0-9]+/);
+    toggle_dish_ingredient($(this), num);
+  });
+
+  $('#new_dish, #edit_dish').on("click", ".new_ingredient", function() {
+    //alert($(this).attr('id'));
+    var f = $(this).parents("form");
+    f.attr('action', "/admin/dishes/new_ingredient");
+    f.submit();
+
+    return false;
+  });
+
+
+
+});
+
+// FUNCTIONS
 function switch_dish_ingredients() {
   $('#new_dish,#edit_dish div.dish_compositions select[id^=\'dish_dish_compositions_attributes\']').each(function() {
     var num = $(this).attr('id').match(/[0-9]+/);
@@ -18,13 +38,4 @@ function toggle_dish_ingredient(selem, num) {
     $("#dish_dish_compositions_attributes_"+ num + "_weight_input").hide();
   }
 }
-
-$(function(){
-  $('#edit_dish, #new_dish').on("change", ".dish_ingredient_select", function() {
-    var num = $(this).parents("li[id^='dish_dish_compositions_attributes']").attr('id').match(/[0-9]+/);
-    toggle_dish_ingredient($(this), num);
-  });
-
-});
-
 

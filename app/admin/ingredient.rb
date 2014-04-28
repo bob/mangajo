@@ -133,7 +133,8 @@ ActiveAdmin.register Ingredient do
     def update
       super do |success, failure|
         success.html {
-          redirect_to session[:ingredient_referer] and return if session[:ingredient_referer]
+          redirect_path = session[:ingredient_referer].blank? ? admin_ingredient_path(@ingredient) : session[:ingredient_referer]
+          redirect_to redirect_path
         }
       end
     end

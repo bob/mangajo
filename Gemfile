@@ -51,6 +51,7 @@ gem "devise"
 gem "cancan"
 gem "rolify"
 gem "activerecord-tableless", "~> 1.0"
+gem 'activerecord-session_store', github: 'rails/activerecord-session_store'
 
 group :development, :test do
   gem 'rspec-rails', '~> 2.0'
@@ -62,3 +63,4 @@ group :development, :test do
 end
 
 gem 'quiet_assets', :group => :development
+
