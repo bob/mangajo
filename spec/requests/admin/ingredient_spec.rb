@@ -1,31 +1,46 @@
 require 'spec_helper'
 
 describe "Ingredients" do
+  let(:admin) { create(:user) }
+
+  before(:each) do
+    admin.add_rations
+    login_as admin
+  end
+
   describe "Index" do
-    let(:admin) { create(:user) }
-
-    before(:each) do
-      login_as admin
-    end
-
     context "create new" do
       it "should create for own ration" do
-        ration = create(:ration, :user => admin)
-        ration_setting = create(:setting, :var => "ration", :value => ration.id)
-        admin.settings << ration_setting
+        ingredient = build(:ingredient)
 
         visit admin_ingredients_path
         click_link('New Ingredient')
 
         page.should have_selector('h2', :text => "New Ingredient")
+
+        fill_in "ingredient_name", :with => ingredient.name
+        fill_in "ingredient_portion", :with => ingredient.portion
+        click_button("Create Ingredient")
+
+        current_path.should == admin_ingredients_path
+        page.should have_selector('table tbody tr td.col-name', :text => ingredient.name)
+      end
+
+      it "should create without referer" do
+        ingredient = build(:ingredient)
+
+        visit new_admin_ingredient_path
+
+        fill_in "ingredient_name", :with => ingredient.name
+        fill_in "ingredient_portion", :with => ingredient.portion
+        click_button("Create Ingredient")
+
+        page.should have_selector('h2', :text => ingredient.name)
       end
     end
 
     it "should eat ingredient" do
-      ration = create(:ration, :user => admin)
-      ration_setting = create(:setting, :var => "ration", :value => ration.id)
-      admin.settings << ration_setting
-      ingredient = create(:ingredient_sample, :user => admin, :ration => ration)
+      ingredient = create(:ingredient_sample, :user => admin, :ration => Ration.find(admin.setting(:ration)))
 
       visit admin_ingredients_path
 

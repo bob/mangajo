@@ -121,8 +121,11 @@ ActiveAdmin.register Ingredient do
     def create
       super do |success, failure|
         success.html {
+          @ingredient.update_column(:user_id, current_user.id)
           @ingredient.update_column(:ration_id, current_user.setting(:ration))
-          redirect_to session[:ingredient_referer] and return if session[:ingredient_referer]
+
+          redirect_path = session[:ingredient_referer].blank? ? admin_ingredient_path(@ingredient) : session[:ingredient_referer]
+          redirect_to redirect_path
         }
       end
     end

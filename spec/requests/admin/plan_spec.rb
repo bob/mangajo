@@ -31,5 +31,6 @@ describe "Plan" do
       page.should have_selector("h2#page_title", plan.name)
       page.should have_selector("div.panel_contents a", dish.name)
     end
+
   end
 end
