@@ -7,7 +7,21 @@ ActiveAdmin.register Plan do
   filter :created_at
 
   action_item :only => :show do
-    link_to "Auto weights", auto_weights_admin_plan_path(plan), :method => :post#, :data => {:confirm => "Are you sure?"}
+    html = ''
+    html += link_to "Copy", copy_admin_plan_path(plan), :method => :post
+    html += link_to "Auto weights", auto_weights_admin_plan_path(plan), :method => :post, :data => {:confirm => "Are you sure?"}
+    html.html_safe
+  end
+
+  member_action :copy, :method => :post do
+    @plan = current_user.plans.find(params[:id])
+    @new_plan, message = @plan.do_copy
+
+    if @new_plan
+      redirect_to admin_plan_path(@new_plan), :notice => "Plan copied"
+    else
+      redirect_to amdin_plan_path(@plan), :alert => "Plan NOT copied: #{message}"
+    end
   end
 
   member_action :auto_weights, :method => :post do

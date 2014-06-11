@@ -114,6 +114,12 @@ ActiveAdmin.register Ingredient do
       }
     end
 
+    def edit
+      super {
+        session[:ingredient_referer] ||= request.referer
+      }
+    end
+
     def show
       @ingredient = Ingredient.find(params[:id])
     end
@@ -124,8 +130,7 @@ ActiveAdmin.register Ingredient do
           @ingredient.update_column(:user_id, current_user.id)
           @ingredient.update_column(:ration_id, current_user.setting(:ration))
 
-          redirect_path = session[:ingredient_referer].blank? ? admin_ingredient_path(@ingredient) : session[:ingredient_referer]
-          redirect_to redirect_path
+          redirect_to redirect_referer(@ingredient)
         }
       end
     end
@@ -133,10 +138,20 @@ ActiveAdmin.register Ingredient do
     def update
       super do |success, failure|
         success.html {
-          redirect_path = session[:ingredient_referer].blank? ? admin_ingredient_path(@ingredient) : session[:ingredient_referer]
-          redirect_to redirect_path
+          redirect_to redirect_referer(@ingredient)
         }
       end
+    end
+
+    private
+    def redirect_referer(ingredient)
+      if session[:ingredient_referer].blank?
+        redirect_path = admin_ingredient_path(ingredient)
+      else
+        redirect_path = session[:ingredient_referer]
+        session[:ingredient_referer] = nil
+      end
+      redirect_path
     end
 
   end

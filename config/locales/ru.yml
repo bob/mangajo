@@ -1,0 +1,26 @@
+ru:
+  attributes:
+    name: Название
+    description: Описание
+    created_at: Создано
+    updated_at: Обновлено
+
+  activerecord:
+    models:
+      plan: План
+      ration: Рацион
+    attributes:
+      user:
+      plan:
+        name: Название
+
+    errors:
+      models:
+        user:
+
+  menu:
+    settings: Настройки
+
+  buttons:
+    update: Обновить
+    reset: Сбросить

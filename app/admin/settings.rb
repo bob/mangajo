@@ -1,4 +1,5 @@
 ActiveAdmin.register_page "Settings" do
+  menu :label => I18n.t("menu.settings")
 
   page_action :update, :method => :post do
     setting = current_user.settings.find_by_var(params[:var])
@@ -23,7 +24,7 @@ ActiveAdmin.register_page "Settings" do
     end
   end
 
-  content do
+  content :title => I18n.t("menu.settings") do
     current_user.full_settings.each do |s|
       next if s.hidden
       para do
@@ -33,9 +34,9 @@ ActiveAdmin.register_page "Settings" do
 
           para b f.label s.title
           para i s.description
-          f.input :type => :text, :name => 'value', :value => s.value, :size => 50
-          f.input :type => :submit, :value => "Update"
-          f.input :type => :submit, :name => "reset", :value => "Reset"
+          f.input :type => :text, :name => 'value', :value => s.value, :size => 60
+          f.input :type => :submit, :value => I18n.t("buttons.update")
+          f.input :type => :submit, :name => "reset", :value => I18n.t("buttons.reset")
         end
       end
     end

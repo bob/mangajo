@@ -54,6 +54,35 @@ describe "Dishes" do
       #page.should have_selector('table tbody tr td.col-carbs', :text => dish_sample.carbs)
     end
 
+    context "create dish with create ingredient" do
+      it "directly" do
+        visit admin_dishes_path
+        click_link "New Dish"
+
+        fill_in "dish_name", :with => "Dish one"
+        click_link "Create new ingredient"
+
+        # Javascript :(
+        #p page.body
+
+        #page.should have_selector('h2', :text => "New Ingredient")
+
+        #fill_in "ingredient_name", :with => "Ingredient one"
+        #fill_in "ingredient_portion", :with => 100
+        #click_button("Create Ingredient")
+
+        #page.should have_selector('h2', :text => "New Dish")
+        #select "Ingredient one", :from => "dish_dish_compositions_attributes_0_ingredient_id"
+        #fill_in "dish_dish_compositions_attributes_0_weight", :with => 100
+        #click_button "Create Dish"
+
+        #page.should have_selector('h2', :text => "Dish one")
+        #page.should have_selector("div.panel_contents table tbody tr a", :text => "Ingredient one")
+      end
+
+
+    end
+
     it "should eat dish" do
       dish = create_dish_user_ration(:dish_sample, admin)
 

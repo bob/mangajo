@@ -1,8 +1,8 @@
 ActiveAdmin.register Eaten do
   config.batch_actions = false
-  menu :priority => 2
+  menu :priority => 20
   scope_to :current_user
-  config.clear_action_items!
+  #config.clear_action_items!
 
   filter :eatable_type
   filter :proteins

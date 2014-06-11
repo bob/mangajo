@@ -112,8 +112,10 @@ ActiveAdmin.register Dish do
         @dish = Dish.new session[:new_dish]
         session[:new_dish] = nil
       end
-      super
-    end
+      super {
+        @dish.dish_compositions << DishComposition.new if @dish.dish_compositions.empty?
+      }
+   end
   end
 
 end

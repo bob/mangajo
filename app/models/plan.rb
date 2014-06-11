@@ -1,4 +1,5 @@
 class Plan < ActiveRecord::Base
+  include Copier
   attr_accessible :name, :description, :meals_num
 
   belongs_to :user
@@ -6,6 +7,20 @@ class Plan < ActiveRecord::Base
 
   validates :meals_num, :inclusion => {:in => (1...8)}
 
+  def do_copy
+    wrap_copy do
+      @copied_item.name = "Copy #{self.name}"
+      @copied_item.user = self.user
+      @copied_item.created_at = nil
+      @copied_item.updated_at = nil
+
+      self.plan_items.each do |i|
+        new_item, message = i.do_copy
+        raise ActiveRecord::Rollback unless new_item
+        @copied_item.plan_items << new_item
+      end
+    end
+  end
 
   def auto_weights!
     p "AUTO: proteins target: #{self.user.setting(:proteins)}"
@@ -90,7 +105,7 @@ class Plan < ActiveRecord::Base
     Meal.find_for(self.user.setting(:meals)).each do |m|
       res += self.meal_total_kcal(m)
     end
-    res
+    res.round(2)
   end
 
   def meal_total_kcal(meal)
@@ -122,7 +137,7 @@ class Plan < ActiveRecord::Base
     Meal.find_for(self.user.setting(:meals)).each do |m|
       res += self.meal_total_nutrition(nutrient, m)
     end
-    res
+    res.round(2)
   end
 
   def meal_total_nutrition(nutrient, meal)

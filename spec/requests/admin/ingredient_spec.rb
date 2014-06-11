@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe "Ingredients" do
+  include IngredientHelper
+
   let(:admin) { create(:user) }
 
   before(:each) do
@@ -10,37 +12,88 @@ describe "Ingredients" do
 
   describe "Index" do
     context "create new" do
-      it "should create for own ration" do
-        ingredient = build(:ingredient)
+      before(:each) do
+        @ingredient = build(:ingredient)
+      end
 
+      it "should create for own ration" do
         visit admin_ingredients_path
         click_link('New Ingredient')
 
         page.should have_selector('h2', :text => "New Ingredient")
 
-        fill_in "ingredient_name", :with => ingredient.name
-        fill_in "ingredient_portion", :with => ingredient.portion
+        fill_in "ingredient_name", :with => @ingredient.name
+        fill_in "ingredient_portion", :with => @ingredient.portion
         click_button("Create Ingredient")
 
         current_path.should == admin_ingredients_path
-        page.should have_selector('table tbody tr td.col-name', :text => ingredient.name)
+        page.should have_selector('table tbody tr td.col-name', :text => @ingredient.name)
+      end
+
+      it "should create from ration" do
+        default_ration = Ration.get_default
+        default_ingredient = create(:ingredient, :user => default_ration.user, :ration => default_ration)
+
+        visit admin_ingredients_path
+        click_link('New Ingredient')
+
+        within("span.action_item") do
+          click_link "Rations"
+        end
+
+        click_link default_ration.name
+        click_link default_ingredient.name
+
+        click_button "Update Ingredient"
+
+        current_path.should == admin_ingredients_path
+        page.should have_selector('table tbody tr td.col-name', :text => default_ingredient.name)
       end
 
       it "should create without referer" do
-        ingredient = build(:ingredient)
-
         visit new_admin_ingredient_path
 
-        fill_in "ingredient_name", :with => ingredient.name
-        fill_in "ingredient_portion", :with => ingredient.portion
+        fill_in "ingredient_name", :with => @ingredient.name
+        fill_in "ingredient_portion", :with => @ingredient.portion
         click_button("Create Ingredient")
 
-        page.should have_selector('h2', :text => ingredient.name)
+        page.should have_selector('h2', :text => @ingredient.name)
       end
     end
 
+    context "edit" do
+      before(:each) do
+        @ingredient = create_ingredient_user_ration(:ingredient, admin)
+      end
+
+      it "should edit and return to index" do
+        visit admin_ingredients_path
+
+        within("tr#ingredient_#{@ingredient.id}") do
+          click_link "Edit"
+        end
+
+        fill_in "ingredient_name", :with => "New one"
+        click_button("Update Ingredient")
+
+        page.should have_selector('h2', :text => "Ingredients")
+        page.should have_selector('table tbody tr td.col-name', :text => "New one")
+      end
+
+      it "should edit and return to show" do
+        visit admin_ingredient_path(@ingredient)
+
+        click_link "Edit"
+        fill_in "ingredient_name", :with => "New second"
+        click_button "Update Ingredient"
+
+        page.should have_selector('h2', :text => "New second")
+      end
+
+    end
+
     it "should eat ingredient" do
-      ingredient = create(:ingredient_sample, :user => admin, :ration => Ration.find(admin.setting(:ration)))
+      ingredient = create_ingredient_user_ration(:ingredient_sample, admin)
 
       visit admin_ingredients_path
 

@@ -11,6 +11,15 @@
 @import "active_admin/mixins";
 @import "active_admin/base";
 
+body.active_admin {
+  form {
+    input[type="text"][size],
+    input[type="number"][size] {
+      width: auto;
+    }
+  }
+}
+
 // Overriding any non-variable SASS must be done after the fact.
 // For example, to change the default status-tag color:
 //

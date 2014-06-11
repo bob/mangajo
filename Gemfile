@@ -52,6 +52,7 @@ gem "cancan"
 gem "rolify"
 gem "activerecord-tableless", "~> 1.0"
 gem 'activerecord-session_store', github: 'rails/activerecord-session_store'
+gem 'rails-i18n', '~> 4.0.0'
 
 group :development, :test do
   gem 'rspec-rails', '~> 2.0'

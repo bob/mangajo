@@ -1,4 +1,6 @@
 class PlanItemIngredient < ActiveRecord::Base
+  include Copier
+
   belongs_to :plan_item
   belongs_to :ingredient
 

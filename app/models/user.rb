@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :shared_rations, :class_name => Ration
   has_many :dishes, :dependent => :destroy
   has_many :ingredients, :dependent => :destroy
+  has_many :diets, :dependent => :destroy
 
   attr_accessible :email, :password, :password_confirmation, :remember_me
   attr_accessible :email, :password, :password_confirmation, :role_ids, :signing_attributes, :as => :admin

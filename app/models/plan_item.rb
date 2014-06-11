@@ -1,5 +1,7 @@
 class PlanItem < ActiveRecord::Base
   include Calorie
+  include Copier
+
   attr_accessible :plan_id, :meal_id, :weight, :eatable_id, :eatable_type
 
   attr_accessor :dish_id, :ingredient_id
@@ -12,7 +14,7 @@ class PlanItem < ActiveRecord::Base
 
   validates :plan, :eatable, :meal, :presence => true
 
-  after_create :add_ingredients
+  after_create :add_ingredients, if: Proc.new { |obj| obj.plan_item_ingredients.empty? }
 
   def add_ingredients
     case self.eatable_type
@@ -27,6 +29,18 @@ class PlanItem < ActiveRecord::Base
       pi.ingredient = eatable
       pi.save
     else
+    end
+  end
+
+  def do_copy
+    wrap_copy do
+      self.plan_item_ingredients.each do |i|
+        new_item, message = i.do_copy
+        new_item.ingredient_id = i.ingredient_id
+
+        raise ActiveRecord::Rollback unless new_item
+        @copied_item.plan_item_ingredients << new_item
+      end
     end
   end
 
