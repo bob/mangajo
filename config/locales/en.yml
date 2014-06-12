@@ -21,3 +21,7 @@
 
 en:
   hello: "Hello world"
+
+  menu:
+    settings: Settings
+    food: Food

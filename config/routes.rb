@@ -1,6 +1,8 @@
 Mealness::Application.routes.draw do
   root :to => "home#index"
 
+  get 'posts/:post_id' => 'index#post', :as => :post
+
   devise_for :users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 

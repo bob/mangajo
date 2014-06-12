@@ -1,6 +1,6 @@
 ActiveAdmin.register Eaten do
   config.batch_actions = false
-  menu :priority => 20
+  menu :priority => 20, :parent => I18n.t("menu.diary")
   scope_to :current_user
   #config.clear_action_items!
 

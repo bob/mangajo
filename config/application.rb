@@ -25,5 +25,6 @@ module Mealness
 
     config.i18n.enforce_available_locales = true
     config.i18n.default_locale = :ru
+    config.assets.paths << "#{Rails}/vendor/assets/fonts"
   end
 end

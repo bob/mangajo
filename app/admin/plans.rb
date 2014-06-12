@@ -1,6 +1,6 @@
 ActiveAdmin.register Plan do
   config.batch_actions = false
-  menu :priority => 1
+  menu :priority => 3, :parent => I18n.t("menu.food")
   scope_to :current_user
 
   filter :name

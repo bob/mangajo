@@ -20,6 +20,14 @@ class User < ActiveRecord::Base
 
   after_create :add_rations
 
+  def admin?
+    has_role?(:admin)
+  end
+
+  def all_diets
+    self.admin? ? Diet.all : diets
+  end
+
   def add_rations
     def_ration = Ration.get_default
     def_ration.customers << self

@@ -1,6 +1,6 @@
 ActiveAdmin.register Ration do
+  menu :priority => 6, :parent => I18n.t("menu.food")
   config.batch_actions = false
-  #menu :priority => 1
   scope_to :current_user, :association_method => :all_rations
 
   before_create do |ration|

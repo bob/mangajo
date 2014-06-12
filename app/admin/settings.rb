@@ -1,5 +1,5 @@
 ActiveAdmin.register_page "Settings" do
-  menu :label => I18n.t("menu.settings")
+  menu :label => I18n.t("menu.settings"), :priority => 100
 
   page_action :update, :method => :post do
     setting = current_user.settings.find_by_var(params[:var])

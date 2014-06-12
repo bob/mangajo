@@ -7,8 +7,37 @@ ru:
 
   activerecord:
     models:
-      plan: План
-      ration: Рацион
+      plan:
+        one: План на день
+        few: Планы на день
+        many: Планы на день
+        other: Планы на день
+      plan_item:
+        one: Пункт плана
+        few: Пункты плана
+        many: Пункты плана
+        other: Пункты плана
+      ration:
+        one: Рацион
+        few: Рационы
+        many: Рационы
+        other: Рационы
+      diet:
+        one: Диета
+        few: Диеты
+        many: Диеты
+        other: Диеты
+      dish:
+        one: Блюдо
+        few: Блюда
+        many: Блюда
+        other: Блюда
+      ingredient:
+        one: Ингредиент
+        few: Ингредиенты
+        many: Ингредиенты
+        other: Ингредиенты
+      eaten: Съеденное
     attributes:
       user:
       plan:
@@ -20,6 +49,8 @@ ru:
 
   menu:
     settings: Настройки
+    food: Питание
+    diary: Дневник
 
   buttons:
     update: Обновить

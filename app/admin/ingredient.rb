@@ -1,4 +1,5 @@
 ActiveAdmin.register Ingredient do
+  menu :priority => 5, :parent => I18n.t("menu.food")
   config.batch_actions = false
   config.clear_action_items! #unless can? :create, Ingredient
 

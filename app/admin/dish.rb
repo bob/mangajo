@@ -1,4 +1,5 @@
 ActiveAdmin.register Dish do
+  menu :priority => 4, :parent => I18n.t("menu.food")
   config.batch_actions = false
   config.clear_action_items!
 
