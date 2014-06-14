@@ -1,4 +1,15 @@
 ru:
+  published: Опубликовано
+  breakfast: "Завтрак"
+  second_breakfast: "2-й завтрак"
+  dinner: "Обед"
+  tea: "Полдник"
+  supper: "Ужин"
+  second_supper: "2-й ужин"
+  item_abbr: "шт"
+  gramm_abbr: "г"
+
+
   attributes:
     name: Название
     description: Описание

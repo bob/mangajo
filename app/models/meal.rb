@@ -2,8 +2,9 @@ class Meal < ActiveRecord::Base
   has_no_table :database => :pretend_success
   column :id, :integer
   column :name, :string
+  column :key, :string
 
-  attr_accessible :id, :name
+  attr_accessible :id, :name, :key
 
   class << self
     def meal_target(nutrient, meal, user, meals_num)
@@ -102,12 +103,12 @@ class Meal < ActiveRecord::Base
 
     def records
       [
-        Meal.new(:id => 1, :name => "Breakfast"),
-        Meal.new(:id => 2, :name => "Second breakfast"),
-        Meal.new(:id => 3, :name => "Dinner"),
-        Meal.new(:id => 4, :name => "Tea"),
-        Meal.new(:id => 5, :name => "Supper"),
-        Meal.new(:id => 6, :name => "Second supper")
+        Meal.new(:id => 1, :name => "Breakfast", :key => "breakfast"),
+        Meal.new(:id => 2, :name => "Second breakfast", :key => "second_breakfast"),
+        Meal.new(:id => 3, :name => "Dinner", :key => "dinner"),
+        Meal.new(:id => 4, :name => "Tea", :key => "tea"),
+        Meal.new(:id => 5, :name => "Supper", :key => "supper"),
+        Meal.new(:id => 6, :name => "Second supper", :key => "second_supper")
       ]
     end
 

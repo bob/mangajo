@@ -24,10 +24,6 @@ class User < ActiveRecord::Base
     has_role?(:admin)
   end
 
-  def all_diets
-    self.admin? ? Diet.all : diets
-  end
-
   def add_rations
     def_ration = Ration.get_default
     def_ration.customers << self
@@ -41,6 +37,14 @@ class User < ActiveRecord::Base
     setting = self.settings.build(:var => "ration")
     setting.value = ration.id
     setting.save
+  end
+
+  def all_diets
+    self.admin? ? Diet.all : diets
+  end
+
+  def all_plans
+    self.admin? ? Plan.all : plans
   end
 
   def all_rations

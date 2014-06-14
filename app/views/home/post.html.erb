@@ -1,0 +1,56 @@
+  <!-- the actual blog post: title/author/date/content -->
+  <h1><%= @diet.name %></h1>
+  <p class="lead">от admin </p>
+  <hr>
+  <p> <%= published_datetime(@diet) %></p>
+  <hr>
+
+  <p><%= @diet.description.html_safe %></p>
+  <br/>
+  <p>
+    <table class="table">
+      <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th>Белки</th>
+        <th>Жиры</th>
+        <th>Углеводы</th>
+        <th>Ккал</th>
+      </tr>
+
+      <% @diet.diet_items.each_with_index do |item, index| -%>
+        <% Meal.find_for(item.plan.meals_num).each_with_index do |m, index2| -%>
+          <% item.plan.plan_items.where(:meal_id => m.id).each_with_index do |i, index3| -%>
+      <tr>
+        <td><%= "<b>День #{index + 1}</b>".html_safe if index2 == 0 and index3 == 0 %></td>
+        <td><%= "<i>#{I18n.t(m.key.to_sym)}</i>".html_safe if index3 == 0 %></td>
+        <td><%= i.eatable.name %></td>
+        <td><%= plan_item_quantity(i) %></td>
+        <td><%= i.calculate_nutrient_weight(:proteins, i.weight) %></td>
+        <td><%= i.calculate_nutrient_weight(:fats, i.weight) %></td>
+        <td><%= i.calculate_nutrient_weight(:carbs, i.weight) %></td>
+        <td><%= i.calculate_kcal_weight(i.weight) %></td>
+      </tr>
+          <% end -%>
+        <% end -%>
+
+      <tr class="active">
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><b><%= item.plan.total_nutrition(:proteins) %></b></td>
+        <td><b><%= item.plan.total_nutrition(:fats) %></b></td>
+        <td><b><%= item.plan.total_nutrition(:carbs) %></b></td>
+        <td><b><%= item.plan.total_kcal %></b></td>
+      </tr>
+
+      <% end -%>
+
+    </table>
+  </p>
+  <br/>
+
+  <%= render :partial => "layouts/disqus" %>
