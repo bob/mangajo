@@ -4,6 +4,6 @@
   - for post in @posts
     %url
       %loc #{post_url(post)}
-      %lastmod=post.updated_at
+      %lastmod=post.updated_at.to_date
       %changefreq monthly
       %priority 0.5
