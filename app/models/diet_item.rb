@@ -4,5 +4,5 @@ class DietItem < ActiveRecord::Base
 
   attr_accessible :plan_id, :diet_id, :order_num
 
-  validates :plan, :diet, :presence => true
+  validates :plan, :presence => true
 end
