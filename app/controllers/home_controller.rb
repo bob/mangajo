@@ -5,7 +5,7 @@ class HomeController < ApplicationController
   end
 
   def post
-    @diet = Diet.published.find(params[:post_id])
+    @diet = Diet.published.friendly.find(params[:post_id])
     @side_diets = Diet.published.limit(7)
   end
 end

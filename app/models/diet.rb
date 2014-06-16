@@ -1,4 +1,7 @@
 class Diet < ActiveRecord::Base
+  extend FriendlyId
+  friendly_id :name, use: :slugged
+
   attr_accessible :name, :description, :diet_items_attributes
 
   belongs_to :user
@@ -7,6 +10,10 @@ class Diet < ActiveRecord::Base
   accepts_nested_attributes_for :diet_items, :allow_destroy => true
 
   scope :published, -> { where.not(:published_at => nil).order("published_at DESC") }
+
+  def should_generate_new_friendly_id?
+    name_changed?
+  end
 
   def published?
     self.published_at.present?

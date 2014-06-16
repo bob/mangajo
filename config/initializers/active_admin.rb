@@ -232,4 +232,27 @@ ActiveAdmin.setup do |config|
   config.authorization_adapter = ActiveAdmin::CanCanAdapter
   config.cancan_ability_class = "AdminAbility"
   config.on_unauthorized_access = :access_denied
+  config.before_filter :revert_friendly_id, :if => -> { !devise_controller? && resource_controller? }
+end
+
+ActiveAdmin::ResourceController.class_eval do
+  protected
+  def resource_controller?
+    Rails::logger.info self.class.superclass.name
+
+    self.class.superclass.name == "ActiveAdmin::ResourceController"
+  end
+
+  def revert_friendly_id
+    model_name = self.class.name.match(/::(.*)Controller$/)[1].singularize
+    # Will throw a NameError if the class does not exist
+    Module.const_get model_name
+
+    eval(model_name).class_eval do
+      def to_param
+        id.to_s
+      end
+    end
+  rescue NameError
+  end
 end
