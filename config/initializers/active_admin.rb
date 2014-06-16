@@ -232,7 +232,7 @@ ActiveAdmin.setup do |config|
   config.authorization_adapter = ActiveAdmin::CanCanAdapter
   config.cancan_ability_class = "AdminAbility"
   config.on_unauthorized_access = :access_denied
-  config.before_filter :revert_friendly_id, :if => -> { !devise_controller? && resource_controller? }
+  #config.before_filter :revert_friendly_id, :if => -> { !devise_controller? && resource_controller? }
 end
 
 ActiveAdmin::ResourceController.class_eval do

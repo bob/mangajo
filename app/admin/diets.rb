@@ -83,4 +83,8 @@ ActiveAdmin.register Diet do
 
     f.actions
   end
+
+  controller do
+    defaults :finder => :find_by_slug
+  end
 end
