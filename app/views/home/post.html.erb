@@ -24,14 +24,14 @@
         <% Meal.find_for(item.plan.meals_num).each_with_index do |m, index2| -%>
           <% item.plan.plan_items.where(:meal_id => m.id).each_with_index do |i, index3| -%>
       <tr>
-        <td><%= "<b>День #{index + 1}</b>".html_safe if index2 == 0 and index3 == 0 %></td>
+        <td><%= "<b>День&nbsp;#{index + 1}</b>".html_safe if index2 == 0 and index3 == 0 %></td>
         <td><%= "<i>#{I18n.t(m.key.to_sym)}</i>".html_safe if index3 == 0 %></td>
         <td><%= i.eatable.name %></td>
         <td><%= plan_item_quantity(i) %></td>
-        <td><%= i.calculate_nutrient_weight(:proteins, i.weight) %></td>
-        <td><%= i.calculate_nutrient_weight(:fats, i.weight) %></td>
-        <td><%= i.calculate_nutrient_weight(:carbs, i.weight) %></td>
-        <td><%= i.calculate_kcal_weight(i.weight) %></td>
+        <td><%= nice_float(i.calculate_nutrient_weight(:proteins, i.weight)) %></td>
+        <td><%= nice_float i.calculate_nutrient_weight(:fats, i.weight) %></td>
+        <td><%= nice_float i.calculate_nutrient_weight(:carbs, i.weight) %></td>
+        <td><%= nice_float i.calculate_kcal_weight(i.weight) %></td>
       </tr>
           <% end -%>
         <% end -%>

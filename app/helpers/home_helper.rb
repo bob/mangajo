@@ -10,12 +10,17 @@ module HomeHelper
     if item.plan_item_ingredients.count == 1
       pi = item.plan_item_ingredients[0]
       if pi.ingredient.portion_unit == "item"
-        "#{pi.portion.round(2)} #{I18n.t("item_abbr")}"
+        res = "#{nice_float(pi.portion)}&nbsp;#{I18n.t("item_abbr")}"
       else
-        "#{pi.weight.round(2)} #{I18n.t("gramm_abbr")}"
+        res = "#{nice_float(pi.weight)}&nbsp;#{I18n.t("gramm_abbr")}"
       end
     else
-      "#{item.weight.round(2)} #{I18n.t("gramm_abbr")}"
+      res = "#{nice_float(item.weight)}&nbsp;#{I18n.t("gramm_abbr")}"
     end
+    res.html_safe
+  end
+
+  def nice_float(float)
+    (float == float.floor) ? float.to_i : float.round(2)
   end
 end
