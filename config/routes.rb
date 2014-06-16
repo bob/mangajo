@@ -1,6 +1,7 @@
 Mealness::Application.routes.draw do
   root :to => "home#index"
 
+  get '/sitemap.xml' => 'sitemap#index', :as => :sitemap, :format => :xml
   get 'posts/:post_id' => 'home#post', :as => :post
 
   devise_for :users, ActiveAdmin::Devise.config
