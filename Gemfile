@@ -67,3 +67,7 @@ end
 gem 'quiet_assets', :group => :development
 gem 'friendly_id', '~> 5.0.0'
 gem "haml-rails"
+gem 'ckeditor'
+gem "carrierwave"
+gem "fog"
+gem "mini_magick"

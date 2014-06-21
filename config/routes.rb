@@ -1,4 +1,6 @@
 Mealness::Application.routes.draw do
+  mount Ckeditor::Engine => '/ckeditor'
+
   root :to => "home#index"
 
   get '/sitemap.xml' => 'sitemap#index', :as => :sitemap, :format => :xml

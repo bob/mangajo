@@ -162,6 +162,7 @@ ActiveAdmin.setup do |config|
   # To load a javascript file:
   #   config.register_javascript 'my_javascript.js'
   config.register_javascript 'active_admin_utils.js'
+  config.register_javascript 'ckeditor/init.js'
 
 
   # == CSV options
@@ -235,6 +236,7 @@ ActiveAdmin.setup do |config|
   #config.before_filter :revert_friendly_id, :if => -> { !devise_controller? && resource_controller? }
 end
 
+# not used, left just for example
 ActiveAdmin::ResourceController.class_eval do
   protected
   def resource_controller?

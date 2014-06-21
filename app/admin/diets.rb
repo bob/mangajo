@@ -73,7 +73,7 @@ ActiveAdmin.register Diet do
 
     f.inputs "Details" do
       f.input :name
-      f.input :description
+      f.input :description, :as => :ckeditor
     end
 
     f.has_many :diet_items, :allow_destroy => true, :heading => "Day plans" do |i|
