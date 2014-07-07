@@ -31,8 +31,7 @@ ActiveAdmin.register Post do
     links += link_to I18n.t("links.#{postablec.downcase}", :default => postablec), eval("admin_#{postablec.downcase}_path(resource.postable)")
     links += link_to I18n.t("links.preview", :default => "Preview"), preview_admin_post_path(resource), :target => "_blank"
     links += link_to I18n.t("links.preview_short", :default => "Preview annotation"), preview_short_admin_post_path(resource), :target => "_blank"
-    links += link_to I18n.t('active_admin.edit'), edit_resource_path(resource), :class => "member_link edit_link"
-    links += link_to I18n.t('active_admin.delete'), resource_path(resource), :method => :delete, :data => {:confirm => I18n.t('active_admin.delete_confirmation')}, :class => "member_link delete_link"
+    links += edit_delete_links(resource)
     links.html_safe
   end
 

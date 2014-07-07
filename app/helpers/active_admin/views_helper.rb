@@ -12,11 +12,17 @@ module ActiveAdmin::ViewsHelper #camelized file name
     options_for_select(ingredients, selected)
   end
 
+  def edit_delete_links(resource)
+    links = ''
+    links += link_to I18n.t('active_admin.edit'), edit_resource_path(resource), :class => "member_link edit_link"
+    links += link_to I18n.t('active_admin.delete'), resource_path(resource), :method => :delete, :data => {:confirm => I18n.t('active_admin.delete_confirmation')}, :class => "member_link delete_link"
+    links.html_safe
+  end
+
   def dish_links(resource)
     links = ''.html_safe
     if current_user.id == resource.user.id
-      links += link_to I18n.t('active_admin.edit'), edit_resource_path(resource), :class => "member_link edit_link"
-      links += link_to I18n.t('active_admin.delete'), resource_path(resource), :method => :delete, :data => {:confirm => I18n.t('active_admin.delete_confirmation')}, :class => "member_link delete_link"
+      links += edit_delete_links(resource)
     end
     links += link_to "Eat", new_admin_dish_eaten_path(resource)
     links
@@ -26,14 +32,12 @@ module ActiveAdmin::ViewsHelper #camelized file name
     links = ''.html_safe
 
     if current_user.id == resource.user.id
-      links += link_to I18n.t('active_admin.edit'), edit_resource_path(resource), :class => "member_link edit_link"
-      links += link_to I18n.t('active_admin.delete'), resource_path(resource), :method => :delete, :data => {:confirm => I18n.t('active_admin.delete_confirmation')}, :class => "member_link delete_link"
+      links += edit_delete_links(resource)
     else
       links += link_to "Copy to my", copy_to_my_admin_ingredient_path(resource), :method => :post, :class => "member_link edit_link"
     end
 
     links += link_to "Eat", new_admin_ingredient_eaten_path(resource)
-
     links
   end
 

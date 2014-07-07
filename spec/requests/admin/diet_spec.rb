@@ -30,6 +30,7 @@ describe "Diets" do
       end
 
       click_link "Edit post"
+      click_button "Update Post"
       click_link "Preview"
 
       page.should have_selector('h1', :text => "DDD")
