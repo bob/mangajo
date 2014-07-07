@@ -1,0 +1,12 @@
+columns do
+  column do
+    panel nil, :class => "big_link" do
+      link_to I18n.t("titles.ingredient"), select_ingredient_admin_eatens_path
+    end
+  end
+  column do
+    panel nil, :class => "big_link" do
+      link_to "Right", '/'
+    end
+  end
+end

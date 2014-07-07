@@ -1,4 +1,8 @@
+require 'active_admin/post_action'
+
 ActiveAdmin.register Diet do
+  include ActiveAdmin::PostAction
+
   config.batch_actions = false
   menu :priority => 2, :parent => I18n.t("menu.food")
   scope_to :current_user, :association_method => :all_diets
@@ -18,22 +22,10 @@ ActiveAdmin.register Diet do
     default_actions
   end
 
-  member_action :publish, :method => :post, :if => Proc.new{ current_user.admin? } do
-    resource.publish
-    redirect_to admin_diet_path(resource), :notice => "Diet published"
-  end
-
-  member_action :unpublish, :method => :post, :if => Proc.new{ current_user.admin? } do
-    resource.unpublish
-    redirect_to admin_diet_path(resource), :notice => "Diet unpublished"
-  end
-
-  action_item :only => [:show], :if => Proc.new{ current_user.admin? } do
-    if resource.published?
-      link_to "Unpublish", unpublish_admin_diet_path(resource), :method => :post
-    else
-      link_to "Publish", publish_admin_diet_path(resource), :method => :post
-    end
+  action_item :only => [:show] do
+    links = ''
+    links += post_action_link(resource)
+    links.html_safe
   end
 
   show do |d|

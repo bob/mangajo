@@ -32,7 +32,7 @@ describe "Dishes" do
       end
 
       page.should have_selector('h2', :text => "New Dish")
-      page.should have_selector('ul.errors li', :text => "At least one ingredient should be defined")
+      page.should have_selector('ul.errors li', :text => "Ingredient can't be blank")
 
       # We can't continue a test because the javascript processing need
       #within("#new_dish") do
@@ -119,6 +119,41 @@ describe "Dishes" do
       page.should have_selector('table tbody tr td.col-carbs', :text => "20.63")
 
    end
+
+  end
+
+  describe "Postable" do
+    let(:user) { create(:user) }
+
+    before(:each) do
+      ration = create(:ration, :user => user)
+      ration_setting = create(:setting, :var => "ration", :value => ration.id)
+      user.settings << ration_setting
+      login_as user
+    end
+
+    it "should work about dish" do
+      dish = create_dish_user_ration(:dish, user)
+
+      visit admin_dishes_path
+
+      click_link dish.name
+      click_link "Create post"
+
+      page.should have_selector('h2', :text => "Edit Post")
+
+      fill_in "Title", :with => "DDD"
+      click_button "Update Post"
+
+      within "span.action_item" do
+        click_link "Dish"
+      end
+
+      click_link "Edit post"
+      click_link "Preview"
+
+      page.should have_selector('h1', :text => "DDD")
+    end
 
   end
 end

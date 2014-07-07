@@ -2,7 +2,7 @@ module HomeHelper
   def published_datetime(post)
     html = ''
     html += content_tag :span, "", :class => "glyphicon glyphicon-time"
-    html += " #{I18n.t(:published)} #{l(post.published_at, :format => :long)}"
+    html += " #{I18n.t(:published)} #{l(post.published_at.presence || Time.now, :format => :long)}"
     html.html_safe
   end
 

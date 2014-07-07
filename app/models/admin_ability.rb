@@ -4,7 +4,7 @@ class AdminAbility
 
   def initialize(user)
     user ||= User.new
-    alias_action :new, :create, :edit, :update, :destroy, :copy, :to => :change
+    alias_action :read, :new, :create, :edit, :update, :destroy, :copy, :to => :change
     alias_action :read, :create, :to => :read_create
 
     can :read, ActiveAdmin::Page, :name => "Dashboard"
@@ -21,6 +21,7 @@ class AdminAbility
 
     can :manage, ActiveAdmin::Page, :name => "Settings"
     can :manage, Ration
+    can [:change, :preview, :preview_short], Post, :user_id => user.id
 
     # A super_admin can do the following:
     if user.has_role? 'admin'

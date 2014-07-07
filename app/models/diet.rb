@@ -10,6 +10,8 @@ class Diet < ActiveRecord::Base
   accepts_nested_attributes_for :diet_items, :allow_destroy => true
 
   scope :published, -> { where.not(:published_at => nil).order("published_at DESC") }
+  has_one :post, :as => :postable, :dependent => :destroy
+
 
   def should_generate_new_friendly_id?
     name_changed?

@@ -9,6 +9,32 @@ ru:
   item_abbr: "шт"
   gramm_abbr: "г"
 
+  titles:
+    select_type: "Выберите тип"
+    ingredient: "Ингредиент"
+    select_ingredient: "Выберите ингредиент"
+
+  subtitles:
+    details: "Детали"
+
+  menu:
+    settings: Настройки
+    food: Питание
+    diary: Дневник
+
+  links:
+    preview: Предпросмотр
+    preview_short: Предпросмотр аннотации
+    dish: Блюдо
+    diet: Диета
+    confirm_publish: Вы уверены, что хотите опубликовать это?
+    create_post: Опубликовать
+    edit_post: Изменить Пост
+
+  buttons:
+    update: Обновить
+    reset: Сбросить
+
 
   attributes:
     name: Название
@@ -18,6 +44,11 @@ ru:
 
   activerecord:
     models:
+      post:
+        one: Пост
+        few: Посты
+        many: Посты
+        other: Посты
       plan:
         one: План на день
         few: Планы на день
@@ -50,6 +81,9 @@ ru:
         other: Ингредиенты
       eaten: Съеденное
     attributes:
+      post:
+        title: Заголовок
+        short_description: Аннотация
       user:
       plan:
         name: Название
@@ -58,11 +92,4 @@ ru:
       models:
         user:
 
-  menu:
-    settings: Настройки
-    food: Питание
-    diary: Дневник
 
-  buttons:
-    update: Обновить
-    reset: Сбросить

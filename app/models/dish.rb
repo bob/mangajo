@@ -7,6 +7,7 @@ class Dish < ActiveRecord::Base
   has_many :eatens, :as => :eatable
   has_many :plan_items, :dependent => :destroy, :as => :eatable
   belongs_to :user
+  has_one :post, :as => :postable, :dependent => :destroy
 
   #scope :by_ration, ->(ration_id) { includes(:ingredients).where(:ingredients => {:ration_id => ration_id }).order("dishes.created_at DESC") }
 
@@ -61,6 +62,10 @@ class Dish < ActiveRecord::Base
   def calculate_nutrient_weight(nutrient, weight_in)
     return 0 if self.weight.to_i == 0
     weight_in.to_i * self.send(nutrient) / self.weight.to_i
+  end
+
+  def published_at
+    updated_at
   end
 
 end

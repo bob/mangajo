@@ -15,5 +15,17 @@ Ckeditor.setup do |config|
   # config.attachment_file_types = ["doc", "docx", "xls", "odt", "ods", "pdf", "rar", "zip", "tar", "swf"]
 
   # Setup authorization to be run as a before filter
-  # config.authorize_with :cancan
+  config.authorize_with :cancan
+end
+
+Ckeditor::PicturesController.class_eval do
+
+  def index
+
+    @pictures = Ckeditor.picture_adapter.find_all(ckeditor_pictures_scope(:assetable => ckeditor_current_user))
+    @pictures = Ckeditor::Paginatable.new(@pictures).page(params[:page])
+
+    respond_with(@pictures, :layout => @pictures.first_page?)
+  end
+
 end

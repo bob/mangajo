@@ -24,7 +24,7 @@ ActiveAdmin.register_page "Dashboard" do
 
     columns do
       column do
-        panel "Eated" do
+        panel "Eated #{link_to("Add", select_type_admin_eatens_path, :style => "float: right;")}".html_safe do
           table_for current_user.eatens.find_day(params[:d]) do
             column("Name") {|e| link_to e.eatable.name, admin_eaten_path(e)}
             column("Proteins") {|e| e.proteins.round(2)}

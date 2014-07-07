@@ -1,9 +1,11 @@
+<% @side_posts ||= [] -%>
+
 <h4>Популярное</h4>
 <div class="row">
     <div class="col-lg-12">
       <ul class="list-unstyled">
-        <% @side_diets.each do |d| -%>
-          <li><%= link_to d.name, post_path(d) %></li>
+        <% @side_posts.each do |d| -%>
+          <li><%= link_to d.title, post_path(d) %></li>
         <% end -%>
 
         </ul>

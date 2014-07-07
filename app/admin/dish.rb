@@ -1,4 +1,8 @@
+require 'active_admin/post_action'
+
 ActiveAdmin.register Dish do
+  include ActiveAdmin::PostAction
+
   menu :priority => 4, :parent => I18n.t("menu.food")
   config.batch_actions = false
   config.clear_action_items!
@@ -20,7 +24,10 @@ ActiveAdmin.register Dish do
   end
 
   action_item :only => [:show] do
-    dish_links(resource)
+    html = ''
+    html += post_action_link(resource)
+    html += dish_links(resource)
+    html.html_safe
   end
 
   index do
@@ -74,7 +81,7 @@ ActiveAdmin.register Dish do
 
     f.inputs "Details" do
       f.input :name
-      f.input :description
+      f.input :description, :as => :ckeditor
     end
 
     f.has_many :dish_compositions, :allow_destroy => true, :heading => "Ingredients" do |i|

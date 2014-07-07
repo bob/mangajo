@@ -4,6 +4,15 @@ ActiveAdmin.register Eaten do
   scope_to :current_user
   #config.clear_action_items!
 
+  # step 1
+  collection_action :select_type, :method => :get, :title => I18n.t("titles.select_type") do
+    render :template => "admin/eatens/select_type"
+  end
+
+  collection_action :select_ingredient, :method => :get, :title => I18n.t("titles.select_ingredient") do
+    render :template => "admin/eatens/select_ingredient"
+  end
+
   filter :eatable_type
   filter :proteins
   filter :fats
