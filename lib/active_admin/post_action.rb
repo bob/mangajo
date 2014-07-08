@@ -1,6 +1,5 @@
 module ActiveAdmin
   module PostAction
-    #extend ActiveSupport::Concern
 
     def self.included(base)
 

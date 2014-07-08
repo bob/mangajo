@@ -1,0 +1,11 @@
+<h1><%= @post.title %></h1>
+
+<p class="lead">от admin </p>
+<hr>
+<p> <%= published_datetime(@post) %></p>
+<hr>
+
+<% entry = exhibit(@post.postable, self) -%>
+<%= entry.render_body %>
+
+

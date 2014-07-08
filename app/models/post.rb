@@ -1,4 +1,7 @@
 class Post < ActiveRecord::Base
+  extend FriendlyId
+  friendly_id :title, use: :slugged
+
   belongs_to :user
   belongs_to :postable, :polymorphic => true
   attr_accessible :title, :short_description
@@ -6,6 +9,10 @@ class Post < ActiveRecord::Base
   scope :published, -> { where.not(:published_at => nil).order("published_at DESC") }
 
   attr_accessor :blog
+
+  def should_generate_new_friendly_id?
+    title_changed?
+  end
 
   def published?
     !self.published_at.nil?

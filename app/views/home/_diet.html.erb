@@ -1,11 +1,7 @@
-  <!-- the actual blog post: title/author/date/content -->
-  <h1><%= @diet.name %></h1>
-  <p class="lead">от admin </p>
-  <hr>
-  <p> <%= published_datetime(@diet) %></p>
-  <hr>
+<% @diet = entry -%>
 
-  <p><%= @diet.description.html_safe %></p>
+<div id="diet_content">
+  <%= @diet.description.try(:html_safe) %>
   <br/>
   <p>
     <table class="table">
@@ -54,3 +50,4 @@
   <br/>
 
   <%= render :partial => "layouts/disqus" %>
+</div>

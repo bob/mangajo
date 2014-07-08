@@ -8,8 +8,8 @@ class Exhibit < SimpleDelegator
 
   def self.exhibits
     [
-      TextPostExhibit,
-      PicturePostExhibit
+      DietPostExhibit,
+      DishPostExhibit
     ]
   end
 

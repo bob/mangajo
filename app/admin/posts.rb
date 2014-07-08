@@ -16,7 +16,7 @@ ActiveAdmin.register Post do
   end
 
   member_action :preview, :method => :get do
-    render :template => "home/dish", :locals => {:entry => resource}, :layout => "application"
+    render :template => "home/post", :locals => {:entry => resource}, :layout => "application"
   end
 
   member_action :preview_short, :method => :get do
@@ -75,9 +75,6 @@ ActiveAdmin.register Post do
   end
 
   controller do
-    #def show
-      #redirect_to edit_admin_post_path(resource) and return
-    #end
-
+    defaults :finder => :find_by_slug
   end
 end

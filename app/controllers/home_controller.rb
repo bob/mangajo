@@ -1,15 +1,16 @@
 class HomeController < ApplicationController
+  before_filter :side_posts
+
   def index
     @posts = Post.published
-    @side_posts = @posts[0..6]
   end
 
   def post
-    @diet = Diet.published.friendly.find(params[:post_id])
-    @side_diets = Diet.published.limit(7)
+    @post = Post.published.friendly.find(params[:post_id])
   end
 
-  def dish
-
+  private
+  def side_posts
+    @side_posts = Post.published.limit(7)
   end
 end

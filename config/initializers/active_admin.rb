@@ -230,6 +230,7 @@ ActiveAdmin.setup do |config|
   #
   # config.filters = true
 
+  config.load_paths = [File.expand_path('app/admin', Rails.root), File.expand_path('app/exhibits', Rails.root)]
   config.authorization_adapter = ActiveAdmin::CanCanAdapter
   config.cancan_ability_class = "AdminAbility"
   config.on_unauthorized_access = :access_denied
