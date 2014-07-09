@@ -4,14 +4,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="">
+  <meta name="description" content="<%= yield_with_default(:meta_description, "Диеты и рецепты для правильного питания с целью похудеть, держать форму или набрать массу.", ". ") %>">
+  <meta name="keywords" content="<%= yield_with_default(:meta_keywords, "диеты, диеты для похудения, диеты для набора массы, фитнес диеты, фитнес меню, диетические рецепты, диетические блюда, питание, правильное питание, контроль питания") %>"/>
   <meta name="author" content="Mealness">
 
-  <title>Diet Recipe</title>
+  <title><%= yield_with_default(:page_title, "Diet Recipe") %></title>
 
   <%= stylesheet_link_tag    "client", media: "all", "data-turbolinks-track" => true %>
-  <%#= stylesheet_link_tag "blog-home", :cache => true %>
-
   <%= javascript_include_tag "client", "data-turbolinks-track" => true %>
 
   <%= csrf_meta_tags %>

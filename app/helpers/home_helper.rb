@@ -20,6 +20,15 @@ module HomeHelper
     res.html_safe
   end
 
+  def ingredient_quantity(ingredient)
+    if ingredient.portion_unit == "item"
+      res = "#{nice_float(ingredient.portions)}&nbsp;#{I18n.t("item_abbr")}"
+    else
+      res = "#{nice_float(ingredient.weight)}&nbsp;#{I18n.t("gramm_abbr")}"
+    end
+    res.html_safe
+  end
+
   def nice_float(float)
     (float == float.floor) ? float.to_i : float.round(2)
   end

@@ -1,4 +1,16 @@
-<h1><%= @post.title %></h1>
+<% content_for :page_title do -%>
+<%= @post.title.html_safe %>
+<% end -%>
+
+<% content_for :meta_keywords do -%>
+<%= @post.meta_keywords.try(:html_safe) %>
+<% end -%>
+
+<% content_for :meta_description do -%>
+<%= @post.meta_description.try(:html_safe) %>
+<% end -%>
+
+<h1><%= @post.title.html_safe %></h1>
 
 <p class="lead">от admin </p>
 <hr>

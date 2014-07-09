@@ -4,7 +4,7 @@ class Post < ActiveRecord::Base
 
   belongs_to :user
   belongs_to :postable, :polymorphic => true
-  attr_accessible :title, :short_description
+  attr_accessible :title, :short_description, :meta_keywords, :meta_description
 
   scope :published, -> { where.not(:published_at => nil).order("published_at DESC") }
 

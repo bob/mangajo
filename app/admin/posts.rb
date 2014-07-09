@@ -68,6 +68,8 @@ ActiveAdmin.register Post do
     f.inputs I18n.t("subtitles.details") do
       f.input :title
       f.input :short_description, :as => :ckeditor
+      f.input :meta_keywords
+      f.input :meta_description
     end
 
     f.actions

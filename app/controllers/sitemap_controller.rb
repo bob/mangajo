@@ -4,13 +4,13 @@ class SitemapController < ApplicationController
 
   def index
     headers['Content-Type'] = 'application/xml'
-    last_post = Diet.last
-    @posts = Diet.published
+    last_post = Post.last
+    @posts = Post.published
 
     if stale?(:etag => last_post, :last_modified => last_post.updated_at.utc)
       respond_to do |format|
         format.html {}
-        format.xml { @posts = Diet.published }
+        format.xml {}
       end
     end
   end

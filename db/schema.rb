@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140707193442) do
+ActiveRecord::Schema.define(version: 20140709101742) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -167,6 +167,8 @@ ActiveRecord::Schema.define(version: 20140707193442) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "slug"
+    t.text     "meta_keywords"
+    t.text     "meta_description"
   end
 
   add_index "posts", ["slug"], name: "index_posts_on_slug", using: :btree

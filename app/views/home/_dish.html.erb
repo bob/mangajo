@@ -1,4 +1,37 @@
 <div id='dish_content'>
+  <p>
+    <table class="table">
+      <tr>
+        <th>Ингедиент</th>
+        <th>Кол-во</th>
+        <th>Белки, г</th>
+        <th>Жиры, г</th>
+        <th>Углеводы, г</th>
+        <th>Ккал</th>
+      </tr>
+
+      <% entry.dish_compositions.each do |dc| -%>
+      <tr>
+        <td><%= dc.ingredient.name %></td>
+        <td><%= ingredient_quantity(dc) %></td>
+        <td><%= dc.proteins %></td>
+        <td><%= dc.fats %></td>
+        <td><%= dc.carbs %></td>
+        <td><%= dc.kcal %></td>
+      </tr>
+      <% end -%>
+
+      <tr>
+        <td>&nbsp;</td>
+        <td><%= entry.weight %> г</td>
+        <td><%= entry.proteins %></td>
+        <td><%= entry.fats %></td>
+        <td><%= entry.carbs %></td>
+        <td><%= entry.kcal %></td>
+      </tr>
+
+    </table>
+  </p>
   <%= entry.description.try(:html_safe) %>
 </div>
 
