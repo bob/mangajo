@@ -14,7 +14,7 @@ ActiveAdmin.register Dish do
   filter :fats
   filter :carbs
 
-  collection_action :new_ingredient, :method => :post do
+  collection_action :new_ingredient, :method => :get do
     session[:new_dish] = params[:dish]
     redirect_to new_admin_ingredient_path
   end
@@ -123,7 +123,16 @@ ActiveAdmin.register Dish do
       super {
         @dish.dish_compositions << DishComposition.new if @dish.dish_compositions.empty?
       }
-   end
+    end
+
+    def edit
+      super {
+        if session[:new_dish]
+          @dish.attributes = session[:new_dish]
+          session[:new_dish] = nil
+        end
+      }
+    end
   end
 
 end

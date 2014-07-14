@@ -7,6 +7,7 @@ $(function(){
   $('#new_dish, #edit_dish').on("click", ".new_ingredient", function() {
     //alert($(this).attr('id'));
     var f = $(this).parents("form");
+    f.attr('method', 'GET');
     f.attr('action', "/admin/dishes/new_ingredient");
     f.submit();
 
