@@ -13,6 +13,7 @@ Mealness::Application.routes.draw do
   get 'admin/dishes/:dish_id/eatens/new' => 'admin/eatens#new', :as => :new_admin_dish_eaten
   get 'admin/ingredients/:ingredient_id/eatens/new' => 'admin/eatens#new', :as => :new_admin_ingredient_eaten
   get 'admin/rations/:ration_id/ingredients' => 'admin/ingredients#index', :as => :admin_ration_ingredients
+  post 'admin/dishes/ingredients/new' => 'admin/dishes#new_ingredient', :as => :new_admin_ingredient_dishes
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

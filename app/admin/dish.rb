@@ -14,7 +14,7 @@ ActiveAdmin.register Dish do
   filter :fats
   filter :carbs
 
-  collection_action :new_ingredient, :method => :get do
+  collection_action :new_ingredient, :method => :post do
     session[:new_dish] = params[:dish]
     redirect_to new_admin_ingredient_path
   end
