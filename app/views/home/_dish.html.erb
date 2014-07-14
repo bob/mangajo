@@ -2,7 +2,7 @@
   <p>
     <table class="table">
       <tr>
-        <th>Ингедиент</th>
+        <th>Ингредиент</th>
         <th>Кол-во</th>
         <th>Белки, г</th>
         <th>Жиры, г</th>
@@ -33,5 +33,7 @@
     </table>
   </p>
   <%= entry.description.try(:html_safe) %>
+
+  <%= render :partial => "layouts/disqus" %>
 </div>
 
