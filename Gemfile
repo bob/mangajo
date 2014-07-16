@@ -71,3 +71,4 @@ gem 'ckeditor'
 gem "carrierwave"
 gem "fog"
 gem "mini_magick"
+gem "iso8601"

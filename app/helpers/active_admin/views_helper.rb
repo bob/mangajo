@@ -3,6 +3,24 @@ module ActiveAdmin::ViewsHelper #camelized file name
     (params[:d] || Date.today).to_date
   end
 
+  def durations_array(limit=120)
+    options = (5..limit).step(5).map do |i|
+      if i >= 60
+        caption = "#{i / 60} #{I18n.t("h")}"
+        m = i % 60
+        caption += " #{m} #{I18n.t("min")}" if m > 0
+      else
+        caption = "#{i} #{I18n.t("min")}"
+      end
+      [caption, i * 60]
+    end
+  end
+
+  def durations_options(selected=nil)
+    options = durations_array
+    options_for_select(options, selected)
+  end
+
   def ingredients_options_with_portion_unit(selected=nil)
     #ingredients = Ingredient.by_ration(current_user.setting(:ration)).map do |i|
     ingredients = current_user.all_ingredients.map do |i|

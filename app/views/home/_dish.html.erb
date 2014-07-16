@@ -1,39 +1,81 @@
-<div id='dish_content'>
-  <p>
-    <table class="table">
-      <tr>
-        <th>Ингредиент</th>
-        <th>Кол-во</th>
-        <th>Белки, г</th>
-        <th>Жиры, г</th>
-        <th>Углеводы, г</th>
-        <th>Ккал</th>
-      </tr>
+<div itemscope itemtype="http://data-vocabulary.org/Recipe" >
 
-      <% entry.dish_compositions.each do |dc| -%>
-      <tr>
-        <td><%= dc.ingredient.name %></td>
-        <td><%= ingredient_quantity(dc) %></td>
-        <td><%= dc.proteins %></td>
-        <td><%= dc.fats %></td>
-        <td><%= dc.carbs %></td>
-        <td><%= dc.kcal %></td>
-      </tr>
-      <% end -%>
+  <h1 itemprop="name"><%= @post.title.html_safe %></h1>
+  <!--img itemprop="photo" src="apple-pie.jpg" /-->
 
-      <tr>
-        <td>&nbsp;</td>
-        <td><%= entry.weight %> г</td>
-        <td><%= entry.proteins %></td>
-        <td><%= entry.fats %></td>
-        <td><%= entry.carbs %></td>
-        <td><%= entry.kcal %></td>
-      </tr>
+  <div class="row">
+    <div class="col-xs-6">
+      <span class="lead" itemprop="author">от admin </span>
+    </div>
+    <div class="col-xs-6 published">
+      <span class="published"><%= published_datetime(@post) %></span>
+    </div>
+  </div>
 
-    </table>
-  </p>
-  <%= entry.description.try(:html_safe) %>
+  <hr>
 
-  <%= render :partial => "layouts/disqus" %>
+  <!--span itemprop="summary">...</span-->
+
+  <!--span itemprop="review" itemscope itemtype="http://data-vocabulary.org/Review-aggregate">
+    <span itemprop="rating">4,0</span> звезды на основе
+    <span itemprop="count">35</span> отзывов
+    </span-->
+
+  <div class="row">
+    <div class="col-xs-6">
+      <p>Время подготовки: <time datetime="<%= duration_iso8601(entry.prep_time) %>" itemprop="prepTime"><%= duration_localed(entry.prep_time) %></time></p>
+      <p>Время приготовления: <time datetime="<%= duration_iso8601(entry.cook_time) %>" itemprop="cookTime"><%= duration_localed(entry.cook_time) %></time></p>
+      <p>Общее время: <time datetime="<%= duration_iso8601(entry.prep_time + entry.cook_time) %>" itemprop="totalTime"><%= duration_localed(entry.prep_time + entry.cook_time) %></time></p>
+    </div>
+    <div class="col-xs-6">
+      <p>Выход: <span itemprop="yield"><%= I18n.t("portions", :count => entry.portions) %></span></p>
+      <p>
+        Для 1 порции:
+        <ul itemprop="nutrition" itemscope itemtype="http://data-vocabulary.org/Nutrition">
+          <li>Вес: <b itemprop="servingSize"><%= entry.portion_value(:weight) %></b> г</li>
+          <li>Белки: <b itemprop="protein"><%= entry.portion_value(:proteins) %></b> г, Жиры: <b itemprop="fat"><%= entry.portion_value(:fats) %></b> г, Угл-ды: <b itemprop="carbohydrates"><%= entry.portion_value(:carbs) %></b> г</li>
+          <li>Калории: <b itemprop="calories"><%= entry.portion_value(:kcal) %></b></li>
+        </ul>
+      </p>
+    </div>
+  </div>
+
+  <div id='dish_content'>
+    <p>
+      <table class="table">
+        <tr>
+          <th>Ингредиент</th>
+          <th>Кол-во</th>
+          <th>Белки, г</th>
+          <th>Жиры, г</th>
+          <th>Углеводы, г</th>
+          <th>Ккал</th>
+        </tr>
+
+        <% entry.dish_compositions.each do |dc| -%>
+        <tr itemprop="ingredient" itemscope itemtype="http://data-vocabulary.org/RecipeIngredient">
+          <td itemprop="name"><%= dc.ingredient.name %></td>
+          <td itemprop="amount"><%= ingredient_quantity(dc) %></td>
+          <td><%= dc.proteins %></td>
+          <td><%= dc.fats %></td>
+          <td><%= dc.carbs %></td>
+          <td><%= dc.kcal %></td>
+        </tr>
+        <% end -%>
+
+        <tr>
+          <td>&nbsp;</td>
+          <td><b><%= entry.weight %> г</b></td>
+          <td><b><%= entry.proteins %></b></td>
+          <td><b><%= entry.fats %></b></td>
+          <td><b><%= entry.carbs %></b></td>
+          <td><b><%= entry.kcal %></b></td>
+        </tr>
+      </table>
+    </p>
+    <hr/>
+    <span itemprop="instructions"><%= entry.description.try(:html_safe) %></span>
+    <hr/>
+    <%= render :partial => "layouts/disqus" %>
+  </div>
 </div>
-

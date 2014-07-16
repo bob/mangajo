@@ -1,8 +1,27 @@
 module HomeHelper
+  include ActiveAdmin::ViewsHelper
+  include ISO8601
+
+  def duration_iso8601(value)
+    (Duration.new(value.to_i) + Duration.new(0)).to_s
+  end
+
+  def duration_localed(value)
+    return 0 unless value.to_i > 0
+
+    res = nil
+    durations_array(600).map{ |a| res = a[0] if a[1] == value }
+    res
+  end
+
   def published_datetime(post)
     html = ''
     html += content_tag :span, "", :class => "glyphicon glyphicon-time"
-    html += " #{I18n.t(:published)} #{l(post.published_at.presence || Time.now, :format => :long)}"
+    html += " #{I18n.t(:published)} "
+
+    publish_date = post.published_at.presence || ::Time.now
+    html += content_tag :time, l(publish_date, :format => :long), :datetime => publish_date.to_s(:db), :itemprop => "published"
+
     html.html_safe
   end
 

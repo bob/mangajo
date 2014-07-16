@@ -1,6 +1,6 @@
 class Dish < ActiveRecord::Base
   include Calorie
-  attr_accessible :name, :description, :dish_compositions_attributes
+  attr_accessible :name, :description, :dish_compositions_attributes, :prep_time, :cook_time, :portions
 
   has_many :dish_compositions, :dependent => :destroy
   has_many :ingredients, :through => :dish_compositions
@@ -66,6 +66,11 @@ class Dish < ActiveRecord::Base
 
   def published_at
     updated_at
+  end
+
+  def portion_value(attr)
+    return 0 if self.portions.to_i == 0
+    (self.send(attr) / self.portions).round
   end
 
 end

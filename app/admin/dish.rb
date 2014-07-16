@@ -56,6 +56,9 @@ ActiveAdmin.register Dish do
       row :proteins
       row :fats
       row :carbs
+      row :prep_time
+      row :cook_time
+      row :portions
     end
 
     panel "Ingredients" do
@@ -82,6 +85,9 @@ ActiveAdmin.register Dish do
     f.inputs "Details" do
       f.input :name
       f.input :description, :as => :ckeditor
+      f.input :prep_time, :as => :select, :collection => durations_options(f.object.prep_time)
+      f.input :cook_time, :as => :select, :collection => durations_options(f.object.cook_time)
+      f.input :portions, :as => :select, :collection => (1..20)
     end
 
     f.has_many :dish_compositions, :allow_destroy => true, :heading => "Ingredients" do |i|

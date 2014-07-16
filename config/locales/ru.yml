@@ -8,6 +8,13 @@ ru:
   second_supper: "2-й ужин"
   item_abbr: "шт"
   gramm_abbr: "г"
+  min: "мин."
+  h: "ч."
+  portions:
+    one: "%{count} порция"
+    few: "%{count} порции"
+    many: "%{count} порций"
+    other: "%{count} порций"
 
   titles:
     select_type: "Выберите тип"
@@ -81,6 +88,8 @@ ru:
         other: Ингредиенты
       eaten: Съеденное
     attributes:
+      dish:
+        prep_time: Время подготовки
       post:
         title: Заголовок
         short_description: Аннотация

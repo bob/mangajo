@@ -149,6 +149,7 @@ GEM
       has_scope (~> 0.6.0.rc)
       responders (~> 1.0.0.rc)
     ipaddress (0.8.0)
+    iso8601 (0.5.0)
     jbuilder (1.5.1)
       activesupport (>= 3.0.0)
       multi_json (>= 1.2.0)
@@ -289,6 +290,7 @@ DEPENDENCIES
   fog
   friendly_id (~> 5.0.0)
   haml-rails
+  iso8601
   jbuilder (~> 1.2)
   jquery-rails
   launchy

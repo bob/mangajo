@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140709101742) do
+ActiveRecord::Schema.define(version: 20140715064415) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -83,6 +83,9 @@ ActiveRecord::Schema.define(version: 20140709101742) do
     t.float    "carbs"
     t.integer  "weight"
     t.integer  "user_id"
+    t.integer  "prep_time",   default: 0
+    t.integer  "cook_time",   default: 0
+    t.integer  "portions",    default: 0
   end
 
   create_table "eatens", force: true do |t|
