@@ -1,12 +1,19 @@
 columns do
   column do
-    panel nil, :class => "big_link" do
-      link_to I18n.t("titles.ingredient"), select_ingredient_admin_eatens_path
+    panel I18n.t("titles.ingredient") do
+      form do |f|
+        f.input :type => :text, :name => 'ingredient', :id => "ingredient_text", "data-autocomplete" => eaten_autocomplete_list_admin_ingredients_path
+        f.input :type => :hidden, :name => 'ingredient_id', :id => "ingredient_id"
+        f.input :type => :submit, :value => I18n.t("buttons.next")
+      end
+
+      table_for ingredients do
+        column(I18n.t("titles.name")) { |c| link_to c.name, new_admin_ingredient_eaten_path(c) }
+      end
     end
   end
   column do
-    panel nil, :class => "big_link" do
-      link_to "Right", '/'
+    panel I18n.t("titles.dish") do
     end
   end
 end

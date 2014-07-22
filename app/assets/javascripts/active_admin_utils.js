@@ -1,4 +1,11 @@
 $(function(){
+  $('#ingredient_text').railsAutocomplete({
+    select: function( event, ui ) {
+     $( "#ingredient_text" ).val( ui.item.title );
+     $( "#ingredient_id" ).val( ui.item.id );
+    }
+  });
+
   $('#edit_dish, #new_dish').on("change", ".dish_ingredient_select", function() {
     var num = $(this).parents("li[id^='dish_dish_compositions_attributes']").attr('id').match(/[0-9]+/);
     toggle_dish_ingredient($(this), num);

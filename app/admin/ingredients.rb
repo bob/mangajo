@@ -17,6 +17,19 @@ ActiveAdmin.register Ingredient do
     crumbs
   end
 
+  collection_action :eaten_autocomplete_list, :method => :get do
+    items = Ingredient.autocomplete_list(current_user, params[:term])
+    res = items.collect do |item|
+      hash = {"id" => item.id.to_s, "label" => item.send(:name), "value" => item.send(:name)}
+      #extra_data.each do |datum|
+        #hash[datum] = item.send(datum)
+      #end if extra_data
+      # TODO: Come back to remove this if clause when test suite is better
+      #hash
+    end
+    render :json => res
+  end
+
   collection_action :rations_list, :method => :get, :title => "Rations" do
     render :template => "admin/ingredients/rations", :locals => {:rations => current_user.all_rations}
   end
@@ -98,7 +111,10 @@ ActiveAdmin.register Ingredient do
     f.actions
   end
 
+  #collection_action :autocomplete_ingredient_name, :method => :get
+
   controller do
+    #autocomplete :ingredient, :name
     #layout 'active_admin'
 
     def scoped_collection

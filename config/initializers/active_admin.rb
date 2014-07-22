@@ -163,6 +163,7 @@ ActiveAdmin.setup do |config|
   #   config.register_javascript 'my_javascript.js'
   config.register_javascript 'active_admin_utils.js'
   config.register_javascript 'ckeditor/init.js'
+  config.register_javascript 'autocomplete-rails.js'
 
 
   # == CSV options

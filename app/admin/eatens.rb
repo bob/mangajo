@@ -6,7 +6,7 @@ ActiveAdmin.register Eaten do
 
   # step 1
   collection_action :select_type, :method => :get, :title => I18n.t("titles.select_type") do
-    render :template => "admin/eatens/select_type"
+    render :template => "admin/eatens/select_type", :locals => {:ingredients => current_user.all_ingredients.limit(10)}
   end
 
   collection_action :select_ingredient, :method => :get, :title => I18n.t("titles.select_ingredient") do

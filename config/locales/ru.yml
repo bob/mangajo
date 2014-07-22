@@ -17,12 +17,15 @@ ru:
     other: "%{count} порций"
 
   titles:
+    name: Название
     select_type: "Выберите тип"
     ingredient: "Ингредиент"
     select_ingredient: "Выберите ингредиент"
+    dish: Блюдо
 
   subtitles:
     details: "Детали"
+    my_ingredients: "Мои ингредиенты"
 
   menu:
     settings: Настройки
@@ -41,6 +44,7 @@ ru:
   buttons:
     update: Обновить
     reset: Сбросить
+    next: Далее
 
 
   attributes:
@@ -88,6 +92,8 @@ ru:
         other: Ингредиенты
       eaten: Съеденное
     attributes:
+      ingredient:
+        name: Название
       dish:
         prep_time: Время подготовки
       post:

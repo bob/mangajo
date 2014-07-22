@@ -59,4 +59,14 @@ class Ingredient < ActiveRecord::Base
     .order("ingredients.created_at DESC")
   end
 
+  def self.by_available_rations(user)
+    temp = user.own_rations + user.shared_rations
+    return nil unless temp.count
+    self.where("ration_id IN (?)", temp.map(&:id)).order("updated_at DESC")
+  end
+
+  def self.autocomplete_list(user, term='')
+    self.by_available_rations(user).where(["LOWER(name) LIKE ?", "%#{term.downcase}%"]).limit(10)
+  end
+
 end

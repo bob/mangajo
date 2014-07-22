@@ -72,3 +72,4 @@ gem "carrierwave"
 gem "fog"
 gem "mini_magick"
 gem "iso8601"
+gem 'rails4-autocomplete'
